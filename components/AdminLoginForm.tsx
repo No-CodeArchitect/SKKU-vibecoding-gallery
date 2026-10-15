@@ -43,7 +43,7 @@ export default function AdminLoginForm() {
           &lsquo;보기&rsquo;를 눌러 입력한 글자가 맞는지(한/영 상태 포함) 확인하세요.
         </p>
       </div>
-      {state.error && (
+      {state.error && !pending && (
         <p className="rounded-lg bg-red-500/15 px-3 py-2 text-sm text-red-300">
           {state.error}
         </p>

@@ -33,7 +33,7 @@ export default async function SectionGalleryPage({
     : new Set<string>();
 
   const all = await getProjects(cohort.id);
-  const base = cohort.rankRevealed ? await rankProjects(all) : all;
+  const base = cohort.rankRevealed ? await rankProjects(all, cohort.minRaters) : all;
   const myRecord = student ? await getRecordByAuthor(student.id) : null;
   const canSubmit = cohort.scoringOpen && !cohort.rankRevealed;
 
@@ -62,6 +62,8 @@ export default async function SectionGalleryPage({
   const newCount = projects.filter((p) => p.isNew).length;
   const scoredCount = projects.filter((p) => p.hasScored).length;
   const total = projects.length;
+  const scorable = projects.filter((p) => !p.isMine).length; // 내 작품은 채점 대상이 아님
+  const hideAiScores = cohort.scoringOpen && !cohort.rankRevealed;
 
   return (
     <main className="min-h-screen bg-night text-white">
@@ -146,7 +148,7 @@ export default async function SectionGalleryPage({
           <Stat label="전체 프로젝트" value={`${total}개`} />
           <Stat label="NEW" value={`${newCount}개`} accent />
           {student && (
-            <Stat label="내가 채점함" value={`${scoredCount} / ${total}`} />
+            <Stat label="내가 채점함" value={`${scoredCount} / ${scorable}`} />
           )}
         </div>
       </div>
@@ -161,7 +163,7 @@ export default async function SectionGalleryPage({
                   ? "아직 내 작품을 등록하지 않았습니다. 썸네일과 배포 주소·설명을 남기면 AI가 카드로 만들어 줍니다."
                   : "작품 등록이 마감되었습니다."
                 : !myRecord.ai
-                  ? "내 작품이 접수되었습니다. 관리자가 분석을 실행하면 갤러리에 공개됩니다."
+                  ? "내 작품이 접수되어 AI가 분석 중입니다. 보통 1분 안에 갤러리에 공개됩니다."
                   : "제목·소개·썸네일은 바로 바뀌고, AI 요약은 다음 분석 때 새로 만들어집니다."}
             </p>
             {(myRecord || canSubmit) && (
@@ -185,7 +187,12 @@ export default async function SectionGalleryPage({
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                hideAiScores={hideAiScores}
+                minRaters={cohort.rankRevealed ? cohort.minRaters : undefined}
+              />
             ))}
           </div>
         )}

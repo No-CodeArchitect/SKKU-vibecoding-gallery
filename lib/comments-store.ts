@@ -122,3 +122,22 @@ export async function setCommentHidden(
   const c = mem.find((x) => x.id === id);
   if (c) c.isHidden = hidden;
 }
+
+// 이 사람이 이 작품에 이미 쓴 별칭 (같은 작품 안에서는 같은 별칭을 유지하기 위해).
+export async function findNickname(
+  projectId: string,
+  authorId: string
+): Promise<string | null> {
+  const sb = getSupabase();
+  if (sb) {
+    const { data } = await sb
+      .from("comments")
+      .select("ai_nickname")
+      .eq("project_id", projectId)
+      .eq("author_id", authorId)
+      .order("created_at", { ascending: true })
+      .limit(1);
+    return (data?.[0] as { ai_nickname?: string } | undefined)?.ai_nickname ?? null;
+  }
+  return mem.find((c) => c.projectId === projectId && c.authorId === authorId)?.aiNickname ?? null;
+}

@@ -77,16 +77,18 @@ export default function ScoreWidget({
           <input type="hidden" name="projectId" value={projectId} />
           <StarRating
             name="completeness"
-            label="완성도 / 작동성"
+            label="완성도"
+            hint="잘 작동하고 완성됐나"
             defaultValue={existing?.completeness ?? 0}
           />
           <StarRating
             name="creativity"
-            label="창의성 / 아이디어"
+            label="창의성"
+            hint="아이디어가 참신한가"
             defaultValue={existing?.creativity ?? 0}
           />
 
-          {state.error && (
+          {state.error && !pending && (
             <p className="rounded-lg bg-red-500/15 px-3 py-2 text-sm text-red-300">
               {state.error}
             </p>

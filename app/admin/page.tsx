@@ -14,6 +14,7 @@ import {
   setMemberStatusAction,
   approveAllAction,
   deleteMemberAction,
+  setMinRatersAction,
   moderateComment,
 } from "@/lib/admin-actions";
 import { listCohorts } from "@/lib/cohorts-store";
@@ -58,6 +59,12 @@ export default async function AdminDashboard() {
       const students = memberships.filter((m) => m.status === "approved");
       const pendingMembers = memberships.filter((m) => m.status === "pending");
       const rejectedMembers = memberships.filter((m) => m.status === "rejected");
+      // 같은 실명으로 가입한 다른 계정 (부계정 의심) — 동명이인일 수 있어 경고만 한다
+      const normName = (n: string) => n.replace(/\s+/g, "");
+      const sameName = (m: (typeof memberships)[number]) =>
+        memberships.filter(
+          (o) => o.id !== m.id && o.status !== "rejected" && normName(o.realName) === normName(m.realName)
+        );
       // 관리자 화면에서는 닉네임 옆에 실명을 함께 보여 준다
       const realNameOf = new Map(memberships.map((m) => [m.id, m.realName]));
       const who = (id: string, nick: string) =>
@@ -80,12 +87,12 @@ export default async function AdminDashboard() {
         updatedAt: r.updatedAt,
       }));
       const pids = new Set(projects.map((p) => p.id));
-      const ranked = (await rankProjects(projects))
+      const ranked = (await rankProjects(projects, c.minRaters))
         .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
         .map((p) => ({ ...p, authorName: who(p.authorId, p.authorName) }));
       const raters = await distinctRaterCountFor(pids);
       const comments = await listAllComments(pids);
-      return { c, students, pendingMembers, rejectedMembers, projects, ranked, raters, comments, rows, missing };
+      return { c, students, pendingMembers, rejectedMembers, sameName, projects, ranked, raters, comments, rows, missing };
     })
   );
 
@@ -294,7 +301,7 @@ export default async function AdminDashboard() {
         </section>
 
         {/* 섹션별 관리 */}
-        {sections.map(({ c, students, pendingMembers, rejectedMembers, projects, ranked, raters, comments, rows, missing }) => (
+        {sections.map(({ c, students, pendingMembers, rejectedMembers, sameName, projects, ranked, raters, comments, rows, missing }) => (
           <section key={c.id} className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
             {/* 헤더 + 링크 */}
             <div className="flex flex-wrap items-center gap-2">
@@ -405,6 +412,7 @@ export default async function AdminDashboard() {
                         <span className="font-bold text-white">{m.realName}</span>
                         <span className="text-white/60">닉네임 {m.nickname}</span>
                         <span className="text-xs text-white/40">{m.email}</span>
+                        <SameNameWarning others={sameName(m)} />
                         <span className="ml-auto flex gap-1">
                           <MemberButton id={m.id} status="approved" label="수락" primary />
                           <MemberButton id={m.id} status="rejected" label="거절" />
@@ -422,6 +430,7 @@ export default async function AdminDashboard() {
                       <span className="font-semibold text-white">{m.nickname}</span>
                       <span className="text-white/60">{m.realName}</span>
                       <span className="text-xs text-white/40">{m.email}</span>
+                      <SameNameWarning others={sameName(m)} />
                       <span className="ml-auto">
                         <MemberButton id={m.id} status="rejected" label="수락 취소" />
                       </span>
@@ -474,11 +483,31 @@ export default async function AdminDashboard() {
             </div>
 
             {/* 순위 미리보기 */}
+            <div className="mt-5">
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <h3 className="text-sm font-bold text-white">순위 미리보기 (관리자 전용)</h3>
+                <form action={setMinRatersAction} className="ml-auto flex items-center gap-2 text-xs text-white/60">
+                  <input type="hidden" name="cohortId" value={c.id} />
+                  최소 채점 인원
+                  <input
+                    name="minRaters"
+                    type="number"
+                    min={1}
+                    max={50}
+                    defaultValue={c.minRaters}
+                    className="w-14 rounded border border-white/15 bg-coal-soft px-2 py-1 text-white outline-none focus:border-gold"
+                  />
+                  명
+                  <button className="rounded bg-white/10 px-2 py-1 font-semibold text-white/80 hover:bg-white/20">
+                    저장
+                  </button>
+                </form>
+              </div>
+              <p className="mb-2 text-xs text-white/40">
+                채점한 사람이 {c.minRaters}명 미만인 작품은 순위에서 빠지고 「채점 부족」으로 표시됩니다.
+              </p>
             {ranked.length > 0 && (
-              <div className="mt-5">
-                <h3 className="mb-2 text-sm font-bold text-white">
-                  순위 미리보기 (관리자 전용)
-                </h3>
+              <div>
                 <ul className="divide-y divide-white/10">
                   {ranked.map((p) => (
                     <li key={p.id} className="flex items-center gap-3 py-2 text-sm">
@@ -494,14 +523,19 @@ export default async function AdminDashboard() {
                       <span className="text-white/60">
                         {p.avgScore !== null ? p.avgScore.toFixed(2) : "-"}
                       </span>
-                      <span className="w-12 text-right text-xs text-white/40">
-                        {p.raterCount}명
+                      <span
+                        className={`w-20 text-right text-xs ${
+                          p.raterCount < c.minRaters ? "text-amber-300/80" : "text-white/40"
+                        }`}
+                      >
+                        {p.raterCount}명{p.raterCount < c.minRaters ? " · 부족" : ""}
                       </span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
+            </div>
 
             {/* 댓글 모더레이션 */}
             {comments.length > 0 && (
@@ -562,6 +596,18 @@ const EDU_STATUS: Record<EduRequestStatus, { label: string; tone: string }> = {
   contacted: { label: "연락함", tone: "bg-sky-500/20 text-sky-300" },
   done: { label: "완료", tone: "bg-white/10 text-white/60" },
 };
+
+function SameNameWarning({ others }: { others: { email: string; nickname: string }[] }) {
+  if (others.length === 0) return null;
+  return (
+    <span
+      className="rounded bg-red-500/15 px-2 py-0.5 text-xs font-semibold text-red-300"
+      title="같은 사람이 계정 두 개로 가입하면 서로 채점할 수 있습니다. 동명이인인지 확인하세요."
+    >
+      ⚠ 같은 실명: {others.map((o) => `${o.nickname}(${o.email})`).join(", ")}
+    </span>
+  );
+}
 
 function MemberButton({
   id,

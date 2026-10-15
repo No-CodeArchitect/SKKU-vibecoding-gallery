@@ -49,12 +49,22 @@ function Thumbnail({ project }: { project: Project }) {
     <img
       src={project.signatureImageUrl ?? ""}
       alt={`${project.title} 미리보기`}
-      className="aspect-[16/10] w-full object-cover"
+      className="aspect-[16/10] w-full object-cover object-top"
     />
   );
 }
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+  hideAiScores = false,
+  minRaters,
+}: {
+  project: Project;
+  // 채점 진행 중에는 AI 점수가 교육생 채점에 영향을 주지 않도록 숨긴다
+  hideAiScores?: boolean;
+  // 순위 공개 후, 최소 인원 미달로 순위에서 빠진 작품 표시용
+  minRaters?: number;
+}) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl bg-coal ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:ring-gold/40">
       <Link href={`/project/${project.id}`} className="flex flex-1 flex-col">
@@ -93,7 +103,14 @@ export default function ProjectCard({ project }: { project: Project }) {
                 {project.raterCount}명 채점
               </span>
             </div>
-          ) : (
+          ) : minRaters !== undefined ? (
+            <div className="mt-auto flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
+              <span className="text-sm font-semibold text-white/50">채점 부족 · 순위 제외</span>
+              <span className="text-xs text-white/40">
+                {project.raterCount}명 / 최소 {minRaters}명
+              </span>
+            </div>
+          ) : hideAiScores ? null : (
             <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
               <ScorePill
                 label="완성도"

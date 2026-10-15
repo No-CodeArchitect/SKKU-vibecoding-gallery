@@ -60,7 +60,7 @@ export default function SubmitProjectForm({
           onUploaded={(path) => setThumbPath(path)}
         />
         <input type="hidden" name="thumbPath" value={thumbPath} />
-        {state.thumbError ? (
+        {state.thumbError && !pending ? (
           <p className="text-xs text-red-300">{state.thumbError}</p>
         ) : (
           <p className="text-xs text-white/40">
@@ -71,7 +71,7 @@ export default function SubmitProjectForm({
       </div>
 
       {FIELDS.map((f) => {
-        const err = state.fieldErrors?.[f.name];
+        const err = pending ? undefined : state.fieldErrors?.[f.name]; // 제출 중엔 이전 오류 숨김
         const common = {
           id: f.name,
           name: f.name,
@@ -102,7 +102,7 @@ export default function SubmitProjectForm({
         );
       })}
 
-      {state.error && (
+      {state.error && !pending && (
         <p className="rounded-lg bg-red-500/15 px-3 py-2 text-sm text-red-300">{state.error}</p>
       )}
       {state.ok && (

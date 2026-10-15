@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { analyzeProject } from "./analyze";
 import { getStudent } from "./session";
 import { getCohortById } from "./cohorts-store";
 import { isAdmin } from "./admin-session";
@@ -106,6 +108,17 @@ export async function submitProjectAction(
   }
   // 교체된 옛 썸네일 파일 정리
   if (thumb && prev?.thumbPath) await removeThumbFile(prev.thumbPath);
+
+  // 아직 공개된 적 없는 작품(첫 등록)은 응답 후 바로 AI 분석 → 자동 공개.
+  // 수정된 작품은 관리자가 「분석 실행」으로 다시 반영한다. 분석이 이미 도는 중이면 건너뜀.
+  const analyzing =
+    prev?.status === "processing" && Date.now() - new Date(prev.updatedAt).getTime() < 5 * 60_000;
+  if (!prev?.ai && !analyzing) {
+    after(async () => {
+      await analyzeProject(recordId);
+      revalidatePath(`/g/${cohort.slug}`);
+    });
+  }
 
   revalidatePath(`/g/${cohort.slug}`);
   revalidatePath(`/g/${cohort.slug}/submit`);

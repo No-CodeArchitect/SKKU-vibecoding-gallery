@@ -6,12 +6,19 @@ import { getStudent } from "@/lib/session";
 import { getRecordByAuthor } from "@/lib/projects-data";
 
 export const dynamic = "force-dynamic";
+// 첫 등록 시 저장 후 같은 함수에서 AI 분석(after)이 돌아가므로 실행 시간을 넉넉히
+export const maxDuration = 300;
 
 const STATUS_TEXT: Record<string, { label: string; tone: string; desc: string }> = {
   waiting: {
-    label: "분석 대기",
+    label: "AI 분석 중",
+    tone: "bg-sky-500/20 text-sky-300",
+    desc: "등록이 접수되어 AI가 분석하고 있습니다. 보통 1분 안에 갤러리에 카드로 공개됩니다. 잠시 후 새로고침해 보세요.",
+  },
+  failed: {
+    label: "분석 지연",
     tone: "bg-amber-500/20 text-amber-300",
-    desc: "등록이 접수되었습니다. 관리자가 분석을 실행하면 AI 요약·심사가 붙어 갤러리에 공개됩니다.",
+    desc: "자동 분석이 끝나지 않았습니다. 관리자가 확인 후 공개합니다. 다시 등록할 필요는 없습니다.",
   },
   updated: {
     label: "수정 반영 대기",
@@ -41,7 +48,9 @@ export default async function SubmitPage({
   const statusKey = !record
     ? null
     : !record.ai
-      ? "waiting"
+      ? record.status === "failed"
+        ? "failed"
+        : "waiting"
       : record.needsAnalysis
         ? "updated"
         : "published";

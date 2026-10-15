@@ -41,7 +41,7 @@ function Hero({
         className="block overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-gold/50"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageUrl} alt={`${title} 썸네일`} className="aspect-[16/10] w-full object-cover" />
+        <img src={imageUrl} alt={`${title} 썸네일`} className="aspect-[16/10] w-full object-cover object-top" />
       </a>
     );
   }
@@ -69,6 +69,8 @@ export default async function ProjectDetailPage({
   const slug = cohort?.slug ?? "";
   const rankRevealed = cohort?.rankRevealed ?? false;
   const scoringOpen = cohort?.scoringOpen ?? false;
+  // 채점 진행 중에는 AI 점수·심사평을 숨긴다 (교육생 채점에 영향 주지 않도록)
+  const hideAi = scoringOpen && !rankRevealed;
 
   // 이 섹션에서 수락된 교육생만 채점/댓글 (섹션 간 분리)
   const student = cohort ? await getStudent(cohort.id) : null;
@@ -82,7 +84,7 @@ export default async function ProjectDetailPage({
   let rank: number | null = null;
   let agg: { avg: number | null; count: number } = { avg: null, count: 0 };
   if (rankRevealed) {
-    const entry = (await rankProjects(await getProjects(project.cohortId))).find(
+    const entry = (await rankProjects(await getProjects(project.cohortId), cohort?.minRaters)).find(
       (p) => p.id === project.id
     );
     rank = entry?.rank ?? null;
@@ -137,6 +139,11 @@ export default async function ProjectDetailPage({
                   교육생 평점 {agg.avg !== null ? agg.avg.toFixed(2) : "-"} / 5
                 </span>
                 <span className="text-white/50">· {agg.count}명 채점</span>
+                {rank === null && (
+                  <span className="text-white/40">
+                    · 최소 {cohort?.minRaters}명 미달로 순위 제외
+                  </span>
+                )}
               </div>
             )}
             <p className="mt-1 text-base text-white/50">{project.tagline}</p>
@@ -224,6 +231,12 @@ export default async function ProjectDetailPage({
               <h2 className="text-sm font-bold text-white">AI 심사평</h2>
               <span className="text-xs text-white/40">순위 미반영 · 참고용</span>
             </div>
+            {hideAi ? (
+              <p className="mt-3 rounded-lg bg-white/5 px-3 py-3 text-sm text-white/50">
+                공정한 채점을 위해 AI 점수와 심사평은 채점이 마감된 뒤 공개됩니다.
+              </p>
+            ) : (
+            <>
             <div className="mt-3 flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <span className="text-white/50">완성도</span>
@@ -237,6 +250,8 @@ export default async function ProjectDetailPage({
             <p className="mt-3 rounded-lg bg-white/5 px-3 py-3 text-sm leading-relaxed text-white/60">
               {project.aiReview.rationale}
             </p>
+            </>
+            )}
           </section>
 
           <section className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">

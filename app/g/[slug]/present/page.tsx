@@ -15,7 +15,7 @@ export default async function SectionPresentPage({
   const cohort = await getCohortBySlug(slug);
   if (!cohort) notFound();
 
-  const ranked = (await rankProjects(await getProjects(cohort.id)))
+  const ranked = (await rankProjects(await getProjects(cohort.id), cohort.minRaters))
     .filter((p) => p.rank !== null)
     .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
 

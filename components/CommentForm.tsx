@@ -38,7 +38,7 @@ export default function CommentForm({
         }
         className="w-full resize-none rounded-xl border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
       />
-      {state.error && (
+      {state.error && !pending && (
         <p className="text-sm text-red-300">{state.error}</p>
       )}
       <div className="flex items-center justify-between">

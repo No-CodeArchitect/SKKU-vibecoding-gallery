@@ -54,7 +54,7 @@ export default function JoinForm({
         </p>
       </div>
 
-      {state.error && (
+      {state.error && !pending && (
         <p className="rounded-lg bg-red-500/15 px-3 py-2 text-sm text-red-300">{state.error}</p>
       )}
 

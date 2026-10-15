@@ -5,11 +5,13 @@ import { useState } from "react";
 export default function StarRating({
   name,
   label,
+  hint,
   defaultValue = 0,
   disabled = false,
 }: {
   name: string;
   label: string;
+  hint?: string; // 라벨 아래 작은 설명
   defaultValue?: number;
   disabled?: boolean;
 }) {
@@ -19,7 +21,10 @@ export default function StarRating({
 
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className="text-sm font-semibold text-white">{label}</span>
+      <span className="flex shrink-0 flex-col">
+        <span className="whitespace-nowrap text-sm font-semibold text-white">{label}</span>
+        {hint && <span className="whitespace-nowrap text-[11px] text-white/40">{hint}</span>}
+      </span>
       <div className="flex items-center gap-1">
         <input type="hidden" name={name} value={value} />
         {[1, 2, 3, 4, 5].map((n) => (

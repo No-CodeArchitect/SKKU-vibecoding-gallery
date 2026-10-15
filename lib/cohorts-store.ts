@@ -10,8 +10,11 @@ export interface Cohort {
   name: string;
   scoringOpen: boolean;
   rankRevealed: boolean;
+  minRaters: number; // 순위에 들기 위한 최소 채점 인원
   createdAt: string;
 }
+
+export const DEFAULT_MIN_RATERS = 3;
 
 const DEFAULT_COHORT: Cohort = {
   id: "c1",
@@ -19,6 +22,7 @@ const DEFAULT_COHORT: Cohort = {
   name: "AI 보수교육 1차",
   scoringOpen: true,
   rankRevealed: false,
+  minRaters: DEFAULT_MIN_RATERS,
   createdAt: "2026-01-01T00:00:00.000Z",
 };
 
@@ -31,6 +35,7 @@ type Row = {
   name: string;
   scoring_open: boolean;
   rank_revealed: boolean;
+  min_raters?: number | null; // 마이그레이션 전에는 없을 수 있음
   created_at: string;
 };
 const fromRow = (r: Row): Cohort => ({
@@ -39,6 +44,7 @@ const fromRow = (r: Row): Cohort => ({
   name: r.name,
   scoringOpen: r.scoring_open,
   rankRevealed: r.rank_revealed,
+  minRaters: r.min_raters ?? DEFAULT_MIN_RATERS,
   createdAt: r.created_at,
 });
 
@@ -111,6 +117,7 @@ export async function createCohort(
     name: name.trim(),
     scoringOpen: true,
     rankRevealed: false,
+    minRaters: DEFAULT_MIN_RATERS,
     createdAt: new Date().toISOString(),
   };
   const sb = getSupabase();
@@ -171,4 +178,18 @@ export async function setCohortRankRevealed(
   }
   const c = mem.find((x) => x.id === id);
   if (c) c.rankRevealed = v;
+}
+
+export async function setCohortMinRaters(id: string, n: number): Promise<void> {
+  const v = Math.max(1, Math.min(50, Math.round(n)));
+  const sb = getSupabase();
+  if (sb) {
+    const { error } = await sb.from("cohorts").update({ min_raters: v }).eq("id", id);
+    if (!error) return;
+    if (process.env.VERCEL) {
+      throw new Error("cohorts.min_raters 칸이 없습니다 (SUPABASE_MIGRATION_QC.md 의 SQL 실행 필요)");
+    }
+  }
+  const c = mem.find((x) => x.id === id);
+  if (c) c.minRaters = v;
 }

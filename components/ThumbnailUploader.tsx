@@ -123,7 +123,7 @@ export default function ThumbnailUploader({
       >
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={preview} alt="썸네일 미리보기" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={preview} alt="썸네일 미리보기" className="absolute inset-0 h-full w-full object-cover object-top" />
         ) : (
           <div className="px-4 text-center">
             <div className={compact ? "text-lg" : "text-2xl"}>🖼️</div>

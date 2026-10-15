@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getStudent } from "./session";
-import { addComment } from "./comments-store";
+import { addComment, findNickname, listComments } from "./comments-store";
 import { generateNickname } from "./pipeline/ai";
 import { getProjectById } from "./projects-data";
 
@@ -39,7 +39,17 @@ export async function postComment(
 
   const isAuthorReply = project.authorId === student.id;
   // 위트 닉네임 생성: ANTHROPIC_API_KEY 있으면 Opus 4.8, 없으면 규칙 기반 목.
-  const aiNickname = await generateNickname(body, student.id + project.id);
+  // 같은 작품에서는 같은 별칭 유지 (작품이 다르면 다른 별칭 → 작품 간 동일인 추정 어렵게)
+  let aiNickname = await findNickname(projectId, student.id);
+  if (!aiNickname) {
+    aiNickname = await generateNickname(body, student.id + project.id);
+    // 같은 작품의 다른 사람과 별칭이 겹치면 번호를 붙여 구분
+    const taken = new Set(
+      (await listComments(projectId)).filter((c) => c.authorId !== student.id).map((c) => c.aiNickname)
+    );
+    const base = aiNickname;
+    for (let n = 2; taken.has(aiNickname); n++) aiNickname = `${base}${n}`;
+  }
 
   await addComment({
     projectId,

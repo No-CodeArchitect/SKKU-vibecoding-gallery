@@ -5,6 +5,7 @@ import MediaEmbed from "@/components/site/MediaEmbed";
 import { firstImage } from "@/lib/media";
 import { getAboutMedia, listMedia } from "@/lib/media-items";
 import { getProjects } from "@/lib/projects-data";
+import { listCohorts } from "@/lib/cohorts-store";
 import ProjectCard from "@/components/ProjectCard";
 import EduBanner from "@/components/site/EduBanner";
 
@@ -41,6 +42,10 @@ export default async function HomePage() {
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, 3)
     .map((p) => ({ ...p, isNew: false, rank: null, avgScore: null }));
+  // 채점 진행 중인 섹션 작품은 AI 점수를 숨긴다
+  const scoringIds = new Set(
+    (await listCohorts()).filter((c) => c.scoringOpen && !c.rankRevealed).map((c) => c.id)
+  );
 
   return (
     <div className="min-h-screen bg-night text-white">
@@ -175,7 +180,9 @@ export default async function HomePage() {
           </div>
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
             {recent.length > 0
-              ? recent.map((p) => <ProjectCard key={p.id} project={p} />)
+              ? recent.map((p) => (
+                  <ProjectCard key={p.id} project={p} hideAiScores={scoringIds.has(p.cohortId)} />
+                ))
               : ["결과물 미리보기", "결과물 미리보기", "결과물 미리보기"].map(
               (l, i) => (
                 <div

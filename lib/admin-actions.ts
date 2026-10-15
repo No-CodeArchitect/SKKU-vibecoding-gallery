@@ -14,6 +14,7 @@ import {
   createCohort,
   setCohortScoringOpen,
   setCohortRankRevealed,
+  setCohortMinRaters,
 } from "./cohorts-store";
 import {
   approveAllPending,
@@ -127,5 +128,15 @@ export async function moderateComment(formData: FormData): Promise<void> {
   const id = String(formData.get("id") ?? "");
   const hidden = String(formData.get("hidden")) === "true";
   await setCommentHidden(id, hidden);
+  refresh();
+}
+
+// --- 순위 최소 채점 인원 ---
+export async function setMinRatersAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const cohortId = String(formData.get("cohortId") ?? "");
+  const n = Number(formData.get("minRaters"));
+  if (!cohortId || !Number.isFinite(n)) return;
+  await setCohortMinRaters(cohortId, n);
   refresh();
 }
