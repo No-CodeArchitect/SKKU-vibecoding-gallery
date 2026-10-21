@@ -10,6 +10,7 @@ import { logout } from "@/lib/auth-actions";
 import { scoredProjectIds } from "@/lib/scores-store";
 import { getCohortBySlug } from "@/lib/cohorts-store";
 import { rankProjects } from "@/lib/ranking";
+import { isAdmin } from "@/lib/admin-session";
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +23,9 @@ export default async function SectionGalleryPage({
   const cohort = await getCohortBySlug(slug);
   if (!cohort) notFound();
 
-  // 이 섹션에서 수락된 교육생만 "로그인 상태"로 인정 (섹션 간 분리)
+  // 이 섹션에서 수락된 참가자만 "로그인 상태"로 인정 (섹션 간 분리)
   const student = await getStudent(cohort.id);
+  const admin = await isAdmin(); // 결과 발표 버튼은 관리자에게만
   const member = student ? null : await getMember();
   const pendingJoin =
     member && (await getMembership(cohort.id, member.sub))?.status === "pending";
@@ -95,18 +97,19 @@ export default async function SectionGalleryPage({
                 포트폴리오 갤러리
               </h1>
               <p className="text-sm text-white/50">
-                교육생들이 만든 프로젝트를 둘러보고, 완성도와 창의성을 채점하고,
-                댓글을 남겨보세요.
+                참가자들이 만든 프로젝트를 둘러보고, 완성도와 창의성을 10점 만점으로
+                채점하고, 댓글을 남겨보세요. 최종 순위는 동료평가 70 · 심사위원 20 · AI 평가
+                10으로 합산합니다.
               </p>
             </div>
 
             <div className="flex shrink-0 items-center gap-3">
-              {cohort.rankRevealed && (
+              {admin && (
                 <Link
                   href={`/g/${slug}/present`}
                   className="rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-night transition hover:bg-gold-soft"
                 >
-                  발표 화면
+                  🏆 결과 발표
                 </Link>
               )}
               {student ? (
@@ -181,7 +184,7 @@ export default async function SectionGalleryPage({
       <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
         {projects.length === 0 ? (
           <p className="rounded-2xl bg-coal px-6 py-16 text-center text-sm text-white/40 ring-1 ring-white/10">
-            아직 공개된 작품이 없습니다. 교육생이 작품을 등록하고 관리자가 분석을
+            아직 공개된 작품이 없습니다. 참가자가 작품을 등록하고 관리자가 분석을
             실행하면 여기에 카드로 표시됩니다.
           </p>
         ) : (

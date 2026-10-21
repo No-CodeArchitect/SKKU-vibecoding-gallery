@@ -8,6 +8,7 @@ import { getProjects } from "@/lib/projects-data";
 import { listCohorts } from "@/lib/cohorts-store";
 import ProjectCard from "@/components/ProjectCard";
 import EduBanner from "@/components/site/EduBanner";
+import { WEIGHTS } from "@/lib/scoring";
 
 // 관리자가 올린 미디어가 바로 반영되도록 요청 시 렌더.
 export const dynamic = "force-dynamic";
@@ -35,13 +36,13 @@ function ImgPlaceholder({ label }: { label: string }) {
 export default async function HomePage() {
   // public/media/hero/hero-1.(jpg|png|…) 를 넣으면 자동으로 히어로 배경이 된다.
   const heroImg = firstImage(["media/hero/hero-1", "media/hero/hero"]);
-  const aboutMedia = await getAboutMedia(); // 과정 소개 대표 영상 (관리자에서 변경 가능)
-  const sketch = await listMedia("sketch"); // 교육 현장 스케치 (관리자 드래그&드롭)
+  const aboutMedia = await getAboutMedia(); // 해커톤 소개 대표 영상 (관리자에서 변경 가능)
+  const sketch = await listMedia("sketch"); // 해커톤 현장 스케치 (관리자 드래그&드롭)
   // 최근 공개된 작품 3개 (전체 섹션). 순위·채점 정보는 홈에서 노출하지 않는다.
   const recent = (await getProjects())
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, 3)
-    .map((p) => ({ ...p, isNew: false, rank: null, avgScore: null }));
+    .map((p) => ({ ...p, isNew: false, rank: null, totalScore: null }));
   // 채점 진행 중인 섹션 작품은 AI 점수를 숨긴다
   const scoringIds = new Set(
     (await listCohorts()).filter((c) => c.scoringOpen && !c.rankRevealed).map((c) => c.id)
@@ -86,16 +87,16 @@ export default async function HomePage() {
           </>
         )}
         <div className="relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-4 py-24 sm:px-6">
-          <Eyebrow>국방 AI 인재양성 · 바이브코딩</Eyebrow>
+          <Eyebrow>성균관대학교 · 바이브코딩 해커톤</Eyebrow>
           <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl">
-            군 특화 AI,
+            아이디어를,
             <br />
             <span className="text-gold">코드로 증명하다</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
-            지난 3년, 약 200명의 교육생이 바이브코딩으로 자신만의 결과물을
-            만들었습니다. 그 기록과 이번 기수의 포트폴리오를 한곳에서
-            만나보세요.
+            AI와 함께 코딩하는 바이브코딩으로 참가자 각자가 직접 서비스를
+            만들었습니다. 작품을 둘러보고, 동료로서 평가하고, 최종 결과 발표까지
+            함께하세요.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
@@ -108,19 +109,19 @@ export default async function HomePage() {
               href="/about"
               className="rounded-full border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-gold hover:text-gold"
             >
-              과정 소개
+              해커톤 소개
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 숫자 밴드 */}
+      {/* 평가 배점 밴드 */}
       <section className="border-y border-white/10 bg-night-soft">
         <div className="mx-auto grid max-w-6xl grid-cols-3 divide-x divide-white/10 px-4 sm:px-6">
           {[
-            { n: "3개년", l: "누적 교육" },
-            { n: "200+", l: "수료 교육생" },
-            { n: "3", l: "운영 트랙 (리더십·정책·프로젝트)" },
+            { n: `${WEIGHTS.peer}점`, l: "동료평가" },
+            { n: `${WEIGHTS.judge}점`, l: "심사위원 평가" },
+            { n: `${WEIGHTS.ai}점`, l: "AI 평가" },
           ].map((s) => (
             <div key={s.l} className="px-2 py-8 text-center sm:py-10">
               <div className="text-3xl font-black text-gold sm:text-4xl">
@@ -132,32 +133,37 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 과정 소개 티저 */}
+      {/* 해커톤 소개 티저 */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div>
             <Eyebrow>About</Eyebrow>
             <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">
-              배우는 것을 넘어,
+              듣는 것을 넘어,
               <br />
-              직접 만드는 교육
+              직접 만드는 해커톤
             </h2>
             <p className="mt-5 leading-relaxed text-white/60">
-              군 특화 AI 보수교육은 이론에 그치지 않습니다. 교육생 각자가
-              바이브코딩으로 실무에 쓸 수 있는 결과물을 완성하고, 마지막 날
-              동료 앞에서 발표합니다. 이 사이트는 그 과정과 성과의 아카이브입니다.
+              참가자 각자가 바이브코딩으로 실제로 작동하는 결과물을 완성하고
+              갤러리에 등록합니다. 동료평가·심사위원 평가·AI 평가를 합산해 순위를
+              정하고, 마지막 날 결과를 발표합니다. 이 사이트는 그 과정과 성과의
+              기록입니다.
             </p>
             <Link
               href="/about"
               className="mt-6 inline-block text-sm font-bold text-gold hover:text-gold-soft"
             >
-              과정 자세히 보기 →
+              해커톤 자세히 보기 →
             </Link>
           </div>
-          <MediaEmbed
-            item={aboutMedia}
-            className="rounded-xl ring-1 ring-white/10"
-          />
+          {aboutMedia ? (
+            <MediaEmbed
+              item={aboutMedia}
+              className="rounded-xl ring-1 ring-white/10"
+            />
+          ) : (
+            <ImgPlaceholder label="해커톤 소개 영상 자리 (관리자 화면에서 추가)" />
+          )}
         </div>
       </section>
 
@@ -168,7 +174,7 @@ export default async function HomePage() {
             <div>
               <Eyebrow>Portfolio</Eyebrow>
               <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">
-                이번 기수 결과물
+                최근 출품작
               </h2>
             </div>
             <Link
@@ -207,7 +213,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 부대 교육 신청 배너 */}
+      {/* 교육·해커톤 문의 배너 */}
       <section className="mx-auto max-w-6xl px-4 pt-20 sm:px-6">
         <EduBanner />
       </section>
@@ -218,7 +224,7 @@ export default async function HomePage() {
           <div>
             <Eyebrow>Media</Eyebrow>
             <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">
-              교육 현장 스케치
+              해커톤 현장 스케치
             </h2>
           </div>
           <Link
@@ -238,7 +244,7 @@ export default async function HomePage() {
                   <MediaEmbed item={m} />
                 </div>
               ))
-            : ["교육 하이라이트 영상 자리", "발표 현장 영상 자리"].map((l, i) => (
+            : ["해커톤 하이라이트 영상 자리", "결과 발표 현장 영상 자리"].map((l, i) => (
                 <div
                   key={i}
                   className="relative overflow-hidden rounded-xl ring-1 ring-white/10"

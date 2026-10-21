@@ -12,7 +12,7 @@ import {
 
 export const dynamic = "force-dynamic";
 
-// 교육생 구글 로그인 시작. ?next=/g/<slug>/join 처럼 돌아갈 경로를 받는다.
+// 참가자 구글 로그인 시작. ?next=/g/<slug>/join 처럼 돌아갈 경로를 받는다.
 // 콜백은 관리자와 같은 /api/admin/google/callback 을 쓰고, 쿠키의 purpose로 구분한다.
 export async function GET(req: Request) {
   const origin = originOf(req);

@@ -58,7 +58,7 @@ export default function ThumbnailUploader({
 }: {
   currentUrl: string | null;
   recordId?: string; // 관리자가 다른 작품 썸네일을 바꿀 때
-  cohortId?: string; // 교육생: 본인 작품이 속한 섹션
+  cohortId?: string; // 참가자: 본인 작품이 속한 섹션
   disabled?: boolean;
   compact?: boolean;
   onUploaded: (path: string, url: string) => void | Promise<void>;

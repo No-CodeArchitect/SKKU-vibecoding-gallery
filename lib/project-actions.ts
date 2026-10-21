@@ -40,7 +40,7 @@ const LIMITS: Record<keyof Submission, number> = {
 };
 const REQUIRED: (keyof Submission)[] = ["title", "tagline", "liveUrl", "problem", "features"];
 
-// 교육생 작품 등록/수정 (1인 1작품). 채점 마감·순위 공개 후에는 잠긴다.
+// 참가자 작품 등록/수정 (1인 1작품). 채점 마감·순위 공개 후에는 잠긴다.
 export async function submitProjectAction(
   _prev: SubmitState,
   formData: FormData
@@ -48,7 +48,7 @@ export async function submitProjectAction(
   const cohort = await getCohortById(String(formData.get("cohortId") ?? ""));
   if (!cohort) return { ok: false, error: "섹션 정보를 찾을 수 없습니다." };
   const student = await getStudent(cohort.id);
-  if (!student) return { ok: false, error: "이 섹션에 가입·수락된 교육생만 등록할 수 있습니다." };
+  if (!student) return { ok: false, error: "이 섹션에 가입·수락된 참가자만 등록할 수 있습니다." };
   if (!cohort.scoringOpen || cohort.rankRevealed) {
     return { ok: false, error: "채점이 마감되어 작품 등록·수정이 잠겼습니다." };
   }

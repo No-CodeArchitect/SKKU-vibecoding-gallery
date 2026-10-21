@@ -3,11 +3,11 @@ import { getMember } from "@/lib/member-session";
 
 const NAV = [
   { href: "/", label: "홈" },
-  { href: "/about", label: "과정 소개" },
+  { href: "/about", label: "해커톤 소개" },
   { href: "/archive", label: "아카이브" },
   { href: "/sections", label: "포트폴리오" },
   { href: "/media", label: "미디어" },
-  { href: "/apply", label: "교육 신청" },
+  { href: "/apply", label: "문의" },
 ];
 
 export default async function SiteHeader() {
@@ -18,7 +18,7 @@ export default async function SiteHeader() {
         <Link href="/" className="flex items-center gap-2">
           <span className="inline-block h-2 w-2 rounded-full bg-gold" />
           <span className="text-sm font-black tracking-widest text-white">
-            AI 보수교육
+            SKKU 바이브코딩
           </span>
         </Link>
 

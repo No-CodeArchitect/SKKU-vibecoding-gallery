@@ -4,8 +4,8 @@ import "server-only";
 import { getSupabase } from "./supabase";
 
 export interface Score {
-  completeness: number; // 완성도/작동성 (1~5)
-  creativity: number; // 창의성/아이디어 (1~5)
+  completeness: number; // 완성도/작동성 (1~10)
+  creativity: number; // 창의성/아이디어 (1~10)
   updatedAt: string;
 }
 
@@ -52,7 +52,7 @@ export async function setScore(
 ): Promise<void> {
   const sb = getSupabase();
   if (sb) {
-    await sb.from("scores").upsert(
+    const { error } = await sb.from("scores").upsert(
       {
         project_id: projectId,
         student_id: studentId,
@@ -62,6 +62,8 @@ export async function setScore(
       },
       { onConflict: "project_id,student_id" }
     );
+    // 10점 루브릭 마이그레이션(SUPABASE_MIGRATION_SKKU.md) 전이면 check 제약에 걸린다
+    if (error) throw new Error(`채점 저장 실패: ${error.message}`);
     return;
   }
   mem.set(key(projectId, studentId), {
@@ -117,9 +119,9 @@ export async function distinctRaterCountFor(
   return set.size;
 }
 
-// 집계(평균/인원)를 프로젝트별 Map으로.
+// 집계(평균/인원)를 프로젝트별 Map으로. (동료·심사위원 채점 공용)
 export function aggregateRows(
-  rows: ScoreRow[]
+  rows: { projectId: string; completeness: number; creativity: number }[]
 ): Map<string, { avg: number; count: number }> {
   const acc = new Map<string, { sum: number; count: number }>();
   for (const r of rows) {

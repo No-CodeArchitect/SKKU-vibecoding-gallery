@@ -2,7 +2,7 @@
 // - 파일: Supabase Storage 버킷 "media" (공개). 브라우저가 서명 URL로 직접 업로드한다.
 // - 목록: 같은 버킷의 _meta/items.json (SQL 불필요). 관리자만 쓰므로 동시성 문제 없음.
 // - Supabase 미설정이면 인메모리(유튜브 링크만 동작).
-// 슬롯: "about"(홈 과정 소개 대표 영상, 1개) / "sketch"(교육 현장 스케치, 여러 개)
+// 슬롯: "about"(홈 해커톤 소개 대표 영상, 1개) / "sketch"(교육 현장 스케치, 여러 개)
 
 import "server-only";
 import { getSupabase } from "./supabase";
@@ -24,16 +24,6 @@ export interface MediaItem {
 export const BUCKET = "media";
 const META_PATH = "_meta/items.json";
 export const MAX_FILE_BYTES = 50 * 1024 * 1024; // Supabase 무료 플랜 파일당 한도
-
-// 기본 과정 소개 영상 (관리자가 따로 지정하기 전까지 홈에 표시)
-export const DEFAULT_ABOUT: MediaItem = {
-  id: "default-about",
-  slot: "about",
-  kind: "youtube",
-  title: "군 특화 AI 교육과정",
-  youtubeId: "_772CA2yewo",
-  createdAt: "2026-01-01T00:00:00.000Z",
-};
 
 const g = globalThis as unknown as { __vgMedia?: MediaItem[] };
 const mem: MediaItem[] = g.__vgMedia ?? (g.__vgMedia = []);
@@ -90,9 +80,9 @@ export async function listMedia(slot: MediaSlot): Promise<MediaItem[]> {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-// 홈 과정 소개 영상: 관리자가 올린 최신 1개, 없으면 기본 영상.
-export async function getAboutMedia(): Promise<MediaItem> {
-  return (await listMedia("about"))[0] ?? DEFAULT_ABOUT;
+// 홈 해커톤 소개 영상: 관리자가 올린 최신 1개. 없으면 null (홈에 자리표시 표시).
+export async function getAboutMedia(): Promise<MediaItem | null> {
+  return (await listMedia("about"))[0] ?? null;
 }
 
 export function publicUrlFor(path: string): string {
@@ -109,7 +99,7 @@ export async function addMedia(
     createdAt: new Date().toISOString(),
   };
   const all = await readAll();
-  // 과정 소개 영상은 1개만 유지 (이전 것은 대체)
+  // 소개 영상은 1개만 유지 (이전 것은 대체)
   const replaced =
     item.slot === "about" ? all.filter((m) => m.slot === "about") : [];
   const kept =

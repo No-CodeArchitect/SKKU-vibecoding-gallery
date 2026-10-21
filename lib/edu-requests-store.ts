@@ -1,4 +1,4 @@
-// 부대 AI 교육 신청 저장소. Supabase edu_requests 테이블.
+// 교육·해커톤 문의 저장소. Supabase edu_requests 테이블.
 // 신청은 다시 받을 수 없는 데이터라, 배포본에서는 저장 실패를 숨기지 않는다.
 // (Supabase 미설정 또는 로컬에서 테이블이 없을 때만 인메모리)
 
@@ -9,8 +9,8 @@ export type EduRequestStatus = "new" | "contacted" | "done";
 
 export interface EduRequest {
   id: string;
-  unit: string; // 부대(기관)명
-  contactName: string; // 담당자 계급·성명
+  unit: string; // 소속(학과·기관)명
+  contactName: string; // 담당자 성명
   phone: string;
   email: string;
   headcount: string;

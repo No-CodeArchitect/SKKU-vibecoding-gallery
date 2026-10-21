@@ -16,8 +16,8 @@ export const dynamic = "force-dynamic";
 
 // 구글에서 돌아온 뒤: state 확인 → 코드 교환·검증 → 용도별 처리.
 // - admin : 허용 이메일인지 확인 → 관리자 세션
-// - member: 교육생 세션 (섹션 가입·승인은 사이트에서 따로 처리)
-// 구글 콘솔에 등록된 리디렉션 URI가 이 주소 하나라서 관리자·교육생이 함께 쓴다.
+// - member: 참가자 세션 (섹션 가입·승인은 사이트에서 따로 처리)
+// 구글 콘솔에 등록된 리디렉션 URI가 이 주소 하나라서 관리자·참가자가 함께 쓴다.
 export async function GET(req: Request) {
   const origin = originOf(req);
   const c = await cookies();

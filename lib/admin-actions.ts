@@ -15,6 +15,7 @@ import {
   setCohortScoringOpen,
   setCohortRankRevealed,
   setCohortMinRaters,
+  getCohortById,
 } from "./cohorts-store";
 import {
   approveAllPending,
@@ -23,6 +24,7 @@ import {
   type MembershipStatus,
 } from "./memberships-store";
 import { setCommentHidden } from "./comments-store";
+import { addJudge, removeJudge } from "./judges-store";
 
 export interface AdminLoginState {
   error: string | null;
@@ -78,7 +80,7 @@ export async function toggleRankRevealed(formData: FormData): Promise<void> {
   refresh();
 }
 
-// --- 섹션 가입(교육생) 수락 ---
+// --- 섹션 가입(참가자) 수락 ---
 export async function setMemberStatusAction(formData: FormData): Promise<void> {
   await requireAdmin();
   const id = String(formData.get("id") ?? "");
@@ -138,5 +140,38 @@ export async function setMinRatersAction(formData: FormData): Promise<void> {
   const n = Number(formData.get("minRaters"));
   if (!cohortId || !Number.isFinite(n)) return;
   await setCohortMinRaters(cohortId, n);
+  refresh();
+}
+
+// --- 심사위원 (구글 이메일 등록) ---
+export async function addJudgeAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const by = (await getAdminEmail()) ?? "password";
+  await addJudge(String(formData.get("email") ?? ""), String(formData.get("name") ?? ""), by);
+  refresh();
+}
+
+export async function removeJudgeAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const email = String(formData.get("email") ?? "");
+  if (email) await removeJudge(email);
+  refresh();
+}
+
+// --- 결과 발표 ---
+// 채점(동료·심사위원)을 마감하고 발표 화면으로 이동한다. 점수는 발표 화면에서 자동 합산된다.
+export async function startCeremonyAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const cohort = await getCohortById(String(formData.get("cohortId") ?? ""));
+  if (!cohort) return;
+  if (cohort.scoringOpen) await setCohortScoringOpen(cohort.id, false);
+  refresh();
+  redirect(`/g/${cohort.slug}/present`);
+}
+
+// 발표가 끝나면 갤러리에도 순위를 공개한다 (심사위원 채점도 이때 마감).
+export async function publishResultsAction(cohortId: string): Promise<void> {
+  await requireAdmin();
+  await setCohortRankRevealed(cohortId, true);
   refresh();
 }

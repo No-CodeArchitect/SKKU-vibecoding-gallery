@@ -1,4 +1,4 @@
-// 구글 계정으로 시작하기 버튼 (교육생 로그인). next: 로그인 후 돌아올 사이트 내 경로.
+// 구글 계정으로 시작하기 버튼 (참가자 로그인). next: 로그인 후 돌아올 사이트 내 경로.
 export default function GoogleButton({ next, label = "Google 계정으로 시작하기" }: { next: string; label?: string }) {
   return (
     <a

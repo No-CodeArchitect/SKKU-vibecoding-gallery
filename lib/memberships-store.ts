@@ -1,5 +1,5 @@
 // 섹션 가입(회원) 저장소 — 구글 로그인한 사람이 섹션에 가입 신청 → 관리자가 수락.
-// membership.id 가 그 섹션에서의 "교육생 ID"다 (채점·댓글·작품의 작성자 ID로 쓰인다).
+// membership.id 가 그 섹션에서의 "참가자 ID"다 (채점·댓글·작품의 작성자 ID로 쓰인다).
 // Supabase memberships 테이블. 배포본에서는 저장 실패를 숨기지 않는다.
 
 import "server-only";

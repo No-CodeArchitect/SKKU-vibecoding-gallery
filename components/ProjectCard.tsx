@@ -60,7 +60,7 @@ export default function ProjectCard({
   minRaters,
 }: {
   project: Project;
-  // 채점 진행 중에는 AI 점수가 교육생 채점에 영향을 주지 않도록 숨긴다
+  // 채점 진행 중에는 AI 점수가 참가자 채점에 영향을 주지 않도록 숨긴다
   hideAiScores?: boolean;
   // 순위 공개 후, 최소 인원 미달로 순위에서 빠진 작품 표시용
   minRaters?: number;
@@ -94,13 +94,13 @@ export default function ProjectCard({
             {project.aiSummary}
           </p>
 
-          {project.rank !== null && project.avgScore !== null ? (
+          {project.rank !== null && project.totalScore !== null ? (
             <div className="mt-auto flex items-center justify-between rounded-lg bg-gold/15 px-3 py-2">
               <span className="text-sm font-bold text-gold">
-                교육생 평점 {project.avgScore.toFixed(2)}
+                종합 {project.totalScore.toFixed(1)}점
               </span>
               <span className="text-xs text-white/50">
-                {project.raterCount}명 채점
+                동료 {project.raterCount}명 · 심사 {project.breakdown?.judgeCount ?? 0}명
               </span>
             </div>
           ) : minRaters !== undefined ? (

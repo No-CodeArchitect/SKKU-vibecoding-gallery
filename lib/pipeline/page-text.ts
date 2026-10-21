@@ -1,8 +1,8 @@
 // 배포 페이지의 제목·설명·본문 텍스트를 가져온다 (AI 분석 참고용).
-// 화면 캡처는 하지 않는다 — 대표 이미지는 교육생이 썸네일로 직접 올린다.
+// 화면 캡처는 하지 않는다 — 대표 이미지는 참가자가 썸네일로 직접 올린다.
 
 const UA =
-  "Mozilla/5.0 (compatible; KAIST-VibeGallery/1.0; +https://kaist-vibecoding.vercel.app)";
+  "Mozilla/5.0 (compatible; SKKU-VibeGallery/1.0)";
 
 // 배포 페이지의 제목·설명·본문 텍스트 (AI 참고용). SPA는 본문이 거의 없을 수 있다.
 // guard: 요청 직전(리디렉션마다) 내부망 주소인지 검사하는 함수.

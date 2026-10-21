@@ -34,7 +34,7 @@ export default function JoinForm({
           placeholder="예: 홍길동"
           className={inputCls}
         />
-        <p className="text-xs text-white/40">관리자만 봅니다. 교육생 명단과 맞춰 가입을 수락하는 데 씁니다.</p>
+        <p className="text-xs text-white/40">관리자만 봅니다. 참가자 명단과 맞춰 가입을 수락하는 데 씁니다.</p>
       </div>
       <div className="flex flex-col gap-1.5">
         <label htmlFor="nickname" className="text-sm font-semibold text-white">

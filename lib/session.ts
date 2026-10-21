@@ -1,5 +1,5 @@
-// "이 섹션의 교육생으로 로그인돼 있는가"를 판단한다.
-// 구글 로그인(회원 세션) + 그 섹션 가입이 관리자 수락(approved) 상태여야 교육생으로 인정.
+// "이 섹션의 참가자로 로그인돼 있는가"를 판단한다.
+// 구글 로그인(회원 세션) + 그 섹션 가입이 관리자 수락(approved) 상태여야 참가자로 인정.
 // 수락 여부는 매 요청 DB에서 확인하므로, 관리자가 취소하면 즉시 반영된다.
 
 import "server-only";
@@ -17,7 +17,7 @@ export function studentOf(m: Membership): Student {
   return { id: m.id, cohortId: m.cohortId, name: m.nickname, realName: m.realName };
 }
 
-// 이 섹션에서 수락된 교육생이면 반환, 아니면 null.
+// 이 섹션에서 수락된 참가자면 반환, 아니면 null.
 export async function getStudent(cohortId: string): Promise<Student | null> {
   const member = await getMember();
   if (!member) return null;

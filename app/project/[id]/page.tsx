@@ -9,6 +9,8 @@ import { getScore } from "@/lib/scores-store";
 import { listComments } from "@/lib/comments-store";
 import { getCohortById } from "@/lib/cohorts-store";
 import { rankProjects } from "@/lib/ranking";
+import { WEIGHTS } from "@/lib/scoring";
+import type { Project } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -69,10 +71,10 @@ export default async function ProjectDetailPage({
   const slug = cohort?.slug ?? "";
   const rankRevealed = cohort?.rankRevealed ?? false;
   const scoringOpen = cohort?.scoringOpen ?? false;
-  // 채점 진행 중에는 AI 점수·심사평을 숨긴다 (교육생 채점에 영향 주지 않도록)
+  // 채점 진행 중에는 AI 점수·심사평을 숨긴다 (참가자 채점에 영향 주지 않도록)
   const hideAi = scoringOpen && !rankRevealed;
 
-  // 이 섹션에서 수락된 교육생만 채점/댓글 (섹션 간 분리)
+  // 이 섹션에서 수락된 참가자만 채점/댓글 (섹션 간 분리)
   const student = cohort ? await getStudent(cohort.id) : null;
 
   const isMine = student ? project.authorId === student.id : false;
@@ -82,14 +84,14 @@ export default async function ProjectDetailPage({
     project.status === "capture_failed" || !project.signatureImageUrl;
 
   let rank: number | null = null;
-  let agg: { avg: number | null; count: number } = { avg: null, count: 0 };
+  let ranked: Project | undefined;
   if (rankRevealed) {
-    const entry = (await rankProjects(await getProjects(project.cohortId), cohort?.minRaters)).find(
+    ranked = (await rankProjects(await getProjects(project.cohortId), cohort?.minRaters)).find(
       (p) => p.id === project.id
     );
-    rank = entry?.rank ?? null;
-    agg = { avg: entry?.avgScore ?? null, count: entry?.raterCount ?? 0 };
+    rank = ranked?.rank ?? null;
   }
+  const b = ranked?.breakdown;
 
   return (
     <main className="min-h-screen bg-night text-white">
@@ -133,15 +135,18 @@ export default async function ProjectDetailPage({
                 </span>
               )}
             </div>
-            {rankRevealed && (
-              <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-gold/15 px-3 py-1.5 text-sm">
+            {rankRevealed && b && (
+              <div className="mt-2 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg bg-gold/15 px-3 py-1.5 text-sm">
                 <span className="font-bold text-gold">
-                  교육생 평점 {agg.avg !== null ? agg.avg.toFixed(2) : "-"} / 5
+                  종합 {ranked?.totalScore != null ? ranked.totalScore.toFixed(1) : "-"} / 100
                 </span>
-                <span className="text-white/50">· {agg.count}명 채점</span>
+                <span className="text-white/50">
+                  · 동료 {b.peerPoints.toFixed(1)}/{WEIGHTS.peer} ({ranked?.raterCount ?? 0}명) · 심사위원{" "}
+                  {b.judgePoints.toFixed(1)}/{WEIGHTS.judge} ({b.judgeCount}명) · AI {b.aiPoints.toFixed(1)}/{WEIGHTS.ai}
+                </span>
                 {rank === null && (
                   <span className="text-white/40">
-                    · 최소 {cohort?.minRaters}명 미달로 순위 제외
+                    · 동료평가 최소 {cohort?.minRaters}명 미달로 순위 제외
                   </span>
                 )}
               </div>
@@ -195,7 +200,7 @@ export default async function ProjectDetailPage({
                 {(
                   [
                     ["해결하려는 문제", project.details.problem],
-                    ["군 활용 시나리오", project.details.militaryUseCase],
+                    ["활용 시나리오", project.details.militaryUseCase],
                     ["사용한 도구·기술", project.details.techStack],
                     ["제작 후기", project.details.notes],
                   ] as const
@@ -229,7 +234,7 @@ export default async function ProjectDetailPage({
           <section className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-bold text-white">AI 심사평</h2>
-              <span className="text-xs text-white/40">순위 미반영 · 참고용</span>
+              <span className="text-xs text-white/40">종합 점수의 {WEIGHTS.ai}% 반영</span>
             </div>
             {hideAi ? (
               <p className="mt-3 rounded-lg bg-white/5 px-3 py-3 text-sm text-white/50">
@@ -269,7 +274,7 @@ export default async function ProjectDetailPage({
                   href={slug ? `/g/${slug}/join` : "/"}
                   className="block rounded-xl border border-white/15 bg-coal-soft px-4 py-3 text-center text-sm font-semibold text-gold transition hover:bg-white/5"
                 >
-                  이 섹션 교육생으로 로그인하면 댓글을 남길 수 있어요
+                  이 섹션 참가자로 로그인하면 댓글을 남길 수 있어요
                 </Link>
               )}
             </div>

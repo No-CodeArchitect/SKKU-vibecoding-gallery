@@ -54,7 +54,7 @@ export default async function JoinPage({
             <>
               <GoogleButton next={here} />
               <p className="mt-4 text-center text-xs leading-relaxed text-white/40">
-                수락된 교육생만 채점·댓글·작품 등록을 할 수 있습니다. 둘러보기는 로그인 없이도
+                수락된 참가자만 채점·댓글·작품 등록을 할 수 있습니다. 둘러보기는 로그인 없이도
                 됩니다.
               </p>
             </>
@@ -71,7 +71,7 @@ export default async function JoinPage({
                 <Row k="구글 계정" v={membership.email} />
               </dl>
               <p className="mt-5 text-xs leading-relaxed text-white/50">
-                강사(관리자)가 수락하면 바로 이용할 수 있습니다. 수락 후 이 페이지를 새로고침하세요.
+                운영진(관리자)이 수락하면 바로 이용할 수 있습니다. 수락 후 이 페이지를 새로고침하세요.
               </p>
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-xs text-white/40 hover:text-gold">
@@ -87,7 +87,7 @@ export default async function JoinPage({
             </div>
           ) : (
             <p className="text-center text-sm text-white/60">
-              이 섹션의 교육생으로 확인되지 않았습니다. 강사에게 문의해 주세요.
+              이 섹션의 참가자로 확인되지 않았습니다. 운영진에게 문의해 주세요.
             </p>
           )}
         </div>

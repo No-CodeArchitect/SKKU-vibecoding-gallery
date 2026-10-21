@@ -17,13 +17,13 @@ const FIELDS: {
   type?: string;
   multiline?: boolean;
 }[] = [
-  { name: "unit", label: "부대(기관)명", required: true, max: 60, placeholder: "예: ○○사단 정보통신대대" },
-  { name: "contactName", label: "담당자 계급·성명", required: true, max: 40, placeholder: "예: 대위 홍길동" },
+  { name: "unit", label: "소속(학과·기관)", required: true, max: 60, placeholder: "예: ○○학과, ○○ 동아리, ○○ 기관" },
+  { name: "contactName", label: "담당자 성명", required: true, max: 40, placeholder: "예: 홍길동" },
   { name: "phone", label: "연락처", required: true, max: 30, placeholder: "예: 010-1234-5678", type: "tel" },
   { name: "email", label: "이메일", max: 100, placeholder: "회신받을 이메일 (선택)", type: "email" },
   { name: "headcount", label: "희망 인원", max: 30, placeholder: "예: 30명 내외" },
-  { name: "period", label: "희망 시기", max: 60, placeholder: "예: 2027년 3월 중, 3일 과정" },
-  { name: "message", label: "교육 대상·희망 내용", max: 1000, placeholder: "교육 대상(간부/병사 등), 관심 주제, 문의 사항", multiline: true },
+  { name: "period", label: "희망 시기", max: 60, placeholder: "예: 2027년 3월 중, 1박 2일" },
+  { name: "message", label: "희망 내용", max: 1000, placeholder: "대상(학부생/대학원생/교직원 등), 교육·해커톤 형태, 관심 주제, 문의 사항", multiline: true },
 ];
 
 export default function ApplyForm() {
@@ -33,7 +33,7 @@ export default function ApplyForm() {
     return (
       <div className="rounded-2xl bg-emerald-500/10 p-8 text-center ring-1 ring-emerald-400/30">
         <div className="text-3xl">✓</div>
-        <h2 className="mt-3 text-lg font-bold text-white">신청이 접수되었습니다</h2>
+        <h2 className="mt-3 text-lg font-bold text-white">문의가 접수되었습니다</h2>
         <p className="mt-2 text-sm text-white/60">
           담당자가 내용을 확인한 뒤 남겨 주신 연락처로 연락드리겠습니다.
         </p>
@@ -77,14 +77,14 @@ export default function ApplyForm() {
       })}
 
       <p className="rounded-lg bg-white/5 px-3 py-2 text-xs leading-relaxed text-white/50">
-        보안상 민감한 정보(부대 위치·임무·병력 세부 등)는 적지 마세요.
+        주민등록번호 등 민감한 개인정보는 적지 마세요.
       </p>
 
       <div className="rounded-xl bg-night px-4 py-3 text-xs leading-relaxed text-white/55 ring-1 ring-white/10">
         <p className="font-semibold text-white/80">개인정보 수집·이용 안내</p>
         <ul className="mt-1 list-disc pl-4">
-          <li>수집 항목: 부대(기관)명, 담당자 계급·성명, 연락처, 이메일(선택)</li>
-          <li>이용 목적: 교육 신청 확인 및 일정 협의를 위한 연락</li>
+          <li>수집 항목: 소속(학과·기관), 담당자 성명, 연락처, 이메일(선택)</li>
+          <li>이용 목적: 문의 확인 및 일정 협의를 위한 연락</li>
           <li>보유 기간: 상담 종료 후 1년 이내 파기 (요청 시 즉시 파기)</li>
           <li>동의를 거부할 수 있으나, 이 경우 신청 접수가 되지 않습니다.</li>
         </ul>
@@ -103,7 +103,7 @@ export default function ApplyForm() {
         disabled={pending}
         className="rounded-lg bg-gold px-4 py-3 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
       >
-        {pending ? "접수 중…" : "교육 신청하기"}
+        {pending ? "접수 중…" : "문의 보내기"}
       </button>
     </form>
   );

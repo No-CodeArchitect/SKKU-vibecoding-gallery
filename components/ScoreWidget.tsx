@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { submitScore, type ScoreState } from "@/lib/score-actions";
-import StarRating from "./StarRating";
+import RubricRating from "./RubricRating";
+import { RUBRIC } from "@/lib/scoring";
 
 const initialState: ScoreState = { ok: false, error: null };
 
@@ -32,7 +33,7 @@ export default function ScoreWidget({
       <div className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
         <h3 className="text-sm font-bold text-white">채점</h3>
         <p className="mt-2 text-sm text-white/50">
-          이 섹션에 가입·수락된 교육생만 채점할 수 있습니다.
+          이 섹션에 가입·수락된 참가자만 채점할 수 있습니다.
         </p>
         <Link
           href={loginHref}
@@ -49,7 +50,7 @@ export default function ScoreWidget({
       <div className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
         <h3 className="text-sm font-bold text-white">채점</h3>
         <p className="mt-2 rounded-lg bg-white/5 px-3 py-3 text-sm text-white/50">
-          본인 작품은 채점할 수 없습니다. 다른 교육생의 프로젝트를 채점해 주세요.
+          본인 작품은 채점할 수 없습니다. 다른 참가자의 프로젝트를 채점해 주세요.
         </p>
       </div>
     );
@@ -60,7 +61,7 @@ export default function ScoreWidget({
   return (
     <div className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-sm font-bold text-white">채점</h3>
+        <h3 className="text-sm font-bold text-white">동료평가</h3>
         {alreadyScored && (
           <span className="inline-flex items-center rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold text-emerald-300">
             채점완료
@@ -75,18 +76,15 @@ export default function ScoreWidget({
       ) : (
         <form action={formAction} className="flex flex-col gap-4">
           <input type="hidden" name="projectId" value={projectId} />
-          <StarRating
-            name="completeness"
-            label="완성도"
-            hint="잘 작동하고 완성됐나"
-            defaultValue={existing?.completeness ?? 0}
-          />
-          <StarRating
-            name="creativity"
-            label="창의성"
-            hint="아이디어가 참신한가"
-            defaultValue={existing?.creativity ?? 0}
-          />
+          {RUBRIC.map((r) => (
+            <RubricRating
+              key={r.key}
+              name={r.key}
+              label={r.label}
+              hint={r.hint}
+              defaultValue={existing?.[r.key] ?? 0}
+            />
+          ))}
 
           {state.error && !pending && (
             <p className="rounded-lg bg-red-500/15 px-3 py-2 text-sm text-red-300">

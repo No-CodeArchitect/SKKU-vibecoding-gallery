@@ -1,5 +1,5 @@
-// 작품(프로젝트) 저장소 — 교육생이 사이트에서 직접 "작품 등록" → DB(projects 테이블).
-// 썸네일은 교육생이 직접 올린다(관리자가 교체 가능). 관리자가 "분석 실행"을 누르면
+// 작품(프로젝트) 저장소 — 참가자가 사이트에서 직접 "작품 등록" → DB(projects 테이블).
+// 썸네일은 참가자가 직접 올린다(관리자가 교체 가능). 관리자가 "분석 실행"을 누르면
 // AI 분석 결과가 채워지고, 그때 카드로 공개된다.
 //
 // - Supabase + projects 테이블이 있으면 그걸 쓴다.
@@ -12,7 +12,7 @@ import type { Project, ProjectStatus } from "./types";
 import { dummyProjects } from "./dummy-data";
 import { getSupabase } from "./supabase";
 
-// ---- 교육생 입력 ----
+// ---- 참가자 입력 ----
 export interface Submission {
   title: string;
   tagline: string;
@@ -53,7 +53,7 @@ export interface ProjectRecord {
   status: RecordStatus;
   needsAnalysis: boolean; // 새 등록/수정 후 아직 분석 안 됨
   ai: AiResult | null; // null이면 갤러리에 아직 안 보임
-  thumbUrl: string | null; // 교육생이 올린 썸네일(대표 이미지) 공개 URL
+  thumbUrl: string | null; // 참가자가 올린 썸네일(대표 이미지) 공개 URL
   thumbPath: string | null; // 스토리지 경로 (교체·삭제용)
   error: string | null;
   submittedAt: string;
@@ -65,7 +65,7 @@ export interface ProjectRecord {
 const NEW_WINDOW_MS = 24 * 60 * 60 * 1000; // 공개 후 24시간 NEW
 
 export function recordIdFor(authorId: string): string {
-  return `pj_${authorId}`; // 1 교육생 : 1 작품
+  return `pj_${authorId}`; // 1 참가자 : 1 작품
 }
 
 // ---- 공개 카드로 변환 ----
@@ -103,7 +103,7 @@ function toProject(r: ProjectRecord): Project {
     hasScored: false,
     isMine: false,
     rank: null,
-    avgScore: null,
+    totalScore: null,
     raterCount: 0,
   };
 }
@@ -278,7 +278,7 @@ async function put(rec: ProjectRecord): Promise<void> {
   else mem.push(rec);
 }
 
-// 교육생 등록/수정. 기존 분석 결과는 유지하고 "재분석 필요"로 표시한다.
+// 참가자 등록/수정. 기존 분석 결과는 유지하고 "재분석 필요"로 표시한다.
 export async function saveSubmission(input: {
   cohortId: string;
   authorId: string;

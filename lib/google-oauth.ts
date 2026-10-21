@@ -7,7 +7,7 @@ import { decodeJwtPayload, validateClaims, type ClaimsResult } from "./google-cl
 
 export const OAUTH_COOKIE = "vg_oauth"; // state·nonce·용도를 잠깐 보관하는 쿠키
 
-// 관리자 로그인과 교육생 로그인이 같은 콜백 주소(/api/admin/google/callback)를 함께 쓴다.
+// 관리자 로그인과 참가자 로그인이 같은 콜백 주소(/api/admin/google/callback)를 함께 쓴다.
 // (구글 콘솔에 등록한 리디렉션 URI를 늘리지 않기 위해) 어느 쪽인지는 쿠키의 purpose로 구분한다.
 export interface OAuthPending {
   state: string;

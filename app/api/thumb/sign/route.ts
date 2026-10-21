@@ -12,7 +12,7 @@ function bad(message: string, status = 400) {
 }
 
 // 썸네일 업로드용 서명 URL 발급.
-// - 교육생: 본인 작품 경로만 (채점 마감 전까지)
+// - 참가자: 본인 작품 경로만 (채점 마감 전까지)
 // - 관리자: body.recordId 로 어떤 작품이든
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   } else {
     const cohort = await getCohortById(String(body.cohortId ?? ""));
     const student = cohort ? await getStudent(cohort.id) : null;
-    if (!cohort || !student) return bad("이 섹션에 가입·수락된 교육생만 올릴 수 있습니다.", 401);
+    if (!cohort || !student) return bad("이 섹션에 가입·수락된 참가자만 올릴 수 있습니다.", 401);
     if (!cohort.scoringOpen || cohort.rankRevealed) {
       return bad("채점이 마감되어 작품 등록·수정이 잠겼습니다.", 403);
     }

@@ -18,12 +18,12 @@ type Field = {
 };
 
 const FIELDS: Field[] = [
-  { name: "title", label: "프로젝트명", required: true, max: 40, placeholder: "예: 부대 당직근무 자동 편성기" },
+  { name: "title", label: "프로젝트명", required: true, max: 40, placeholder: "예: 강의실 빈자리 실시간 알리미" },
   { name: "liveUrl", label: "배포 주소 (URL)", required: true, max: 500, placeholder: "https://…", hint: "누구나 접속할 수 있는 공개 주소를 넣어 주세요. AI가 이 페이지 내용도 참고합니다." },
-  { name: "tagline", label: "한 줄 소개", required: true, max: 80, placeholder: "예: 엑셀 지옥 탈출, 클릭 한 번으로 공평한 당직표" },
-  { name: "problem", label: "어떤 문제를 해결하나요?", required: true, multiline: true, max: 600, placeholder: "현장에서 겪던 불편함, 누가 어떤 상황에서 쓰는지" },
-  { name: "features", label: "주요 기능", required: true, multiline: true, max: 600, placeholder: "줄바꿈 또는 쉼표로 구분 (예: 제약 조건 입력, 자동 편성, 엑셀 내보내기)" },
-  { name: "militaryUseCase", label: "군 활용 시나리오", multiline: true, max: 600, placeholder: "부대에서 실제로 어떻게 쓰일 수 있는지" },
+  { name: "tagline", label: "한 줄 소개", required: true, max: 80, placeholder: "예: 공강 시간, 앉을 곳부터 찾지 말자" },
+  { name: "problem", label: "어떤 문제를 해결하나요?", required: true, multiline: true, max: 600, placeholder: "평소 겪던 불편함, 누가 어떤 상황에서 쓰는지" },
+  { name: "features", label: "주요 기능", required: true, multiline: true, max: 600, placeholder: "줄바꿈 또는 쉼표로 구분 (예: 실시간 빈 강의실, 건물·층 필터, 즐겨찾기)" },
+  { name: "militaryUseCase", label: "활용 시나리오", multiline: true, max: 600, placeholder: "실제로 누가, 어떻게 쓸 수 있는지" },
   { name: "techStack", label: "사용한 도구·기술", max: 200, placeholder: "예: Claude, Cursor, Vercel, Google Sheets" },
   { name: "repoUrl", label: "소스코드 주소 (선택)", max: 500, placeholder: "https://github.com/…" },
   { name: "notes", label: "제작 후기 · 어려웠던 점", multiline: true, max: 600, placeholder: "자유롭게" },

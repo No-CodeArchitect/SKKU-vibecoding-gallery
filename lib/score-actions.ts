@@ -5,16 +5,11 @@ import { getStudent } from "./session";
 import { setScore } from "./scores-store";
 import { getCohortById } from "./cohorts-store";
 import { getProjectById } from "./projects-data";
+import { parseRubricScore, SCORE_MAX } from "./scoring";
 
 export interface ScoreState {
   ok: boolean;
   error: string | null;
-}
-
-function parseStar(value: FormDataEntryValue | null): number | null {
-  const n = Number(value);
-  if (!Number.isInteger(n) || n < 1 || n > 5) return null;
-  return n;
 }
 
 export async function submitScore(
@@ -27,10 +22,10 @@ export async function submitScore(
     return { ok: false, error: "프로젝트를 찾을 수 없습니다." };
   }
 
-  // 이 섹션에서 수락된 교육생만 채점 (섹션 간 분리)
+  // 이 섹션에서 수락된 참가자만 채점 (섹션 간 분리)
   const student = await getStudent(project.cohortId);
   if (!student) {
-    return { ok: false, error: "이 섹션에 가입·수락된 교육생만 채점할 수 있습니다." };
+    return { ok: false, error: "이 섹션에 가입·수락된 참가자만 채점할 수 있습니다." };
   }
 
   const cohort = await getCohortById(student.cohortId);
@@ -43,13 +38,18 @@ export async function submitScore(
     return { ok: false, error: "본인 프로젝트는 채점할 수 없습니다." };
   }
 
-  const completeness = parseStar(formData.get("completeness"));
-  const creativity = parseStar(formData.get("creativity"));
+  const completeness = parseRubricScore(formData.get("completeness"));
+  const creativity = parseRubricScore(formData.get("creativity"));
   if (completeness === null || creativity === null) {
-    return { ok: false, error: "두 항목 모두 1~5점으로 선택해 주세요." };
+    return { ok: false, error: `두 항목 모두 1~${SCORE_MAX}점으로 선택해 주세요.` };
   }
 
-  await setScore(projectId, student.id, completeness, creativity);
+  try {
+    await setScore(projectId, student.id, completeness, creativity);
+  } catch (err) {
+    console.error("[score]", (err as Error).message);
+    return { ok: false, error: "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };
+  }
   revalidatePath(`/g/${cohort.slug}`);
   revalidatePath(`/project/${projectId}`);
   return { ok: true, error: null };

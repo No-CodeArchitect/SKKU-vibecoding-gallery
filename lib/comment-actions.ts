@@ -23,10 +23,10 @@ export async function postComment(
     return { ok: false, error: "프로젝트를 찾을 수 없습니다." };
   }
 
-  // 이 섹션에서 수락된 교육생만 댓글 (섹션 간 분리)
+  // 이 섹션에서 수락된 참가자만 댓글 (섹션 간 분리)
   const student = await getStudent(project.cohortId);
   if (!student) {
-    return { ok: false, error: "이 섹션에 가입·수락된 교육생만 댓글을 남길 수 있습니다." };
+    return { ok: false, error: "이 섹션에 가입·수락된 참가자만 댓글을 남길 수 있습니다." };
   }
 
   const body = String(formData.get("body") ?? "").trim();

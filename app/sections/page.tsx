@@ -30,7 +30,7 @@ export default async function SectionsPage() {
             포트폴리오 섹션
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-white/60">
-            과정/기수별 결과물 갤러리입니다. 들어갈 섹션을 선택하세요.
+            회차·섹션별 출품작 갤러리입니다. 들어갈 섹션을 선택하세요.
           </p>
         </div>
       </section>

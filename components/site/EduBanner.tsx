@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-// 부대 AI 교육 신청 배너 (홈 · 섹션 갤러리 하단).
+// 교육·해커톤 문의 배너 (홈 · 섹션 갤러리 하단).
 export default function EduBanner({ compact = false }: { compact?: boolean }) {
   return (
     <aside
@@ -23,25 +23,25 @@ export default function EduBanner({ compact = false }: { compact?: boolean }) {
       <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <span className="inline-block rounded-full bg-gold px-2.5 py-0.5 text-[11px] font-black tracking-wider text-night">
-            교육 신청
+            교육·해커톤 문의
           </span>
           <h2
             className={`mt-3 font-black tracking-tight text-white ${
               compact ? "text-lg sm:text-xl" : "text-2xl sm:text-3xl"
             }`}
           >
-            우리 부대도 AI 교육을 받고 싶다면
+            우리 학과·동아리에서도 바이브코딩 해커톤을 열고 싶다면
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/65">
-            부대·기관 단위로 군 특화 AI·바이브코딩 교육을 신청할 수 있습니다. 희망 인원과
-            시기를 남겨 주시면 담당자가 확인 후 연락드립니다.
+            학과·동아리·기관 단위로 바이브코딩 교육이나 해커톤 운영을 문의할 수 있습니다.
+            희망 인원과 시기를 남겨 주시면 담당자가 확인 후 연락드립니다.
           </p>
         </div>
         <Link
           href="/apply"
           className="shrink-0 self-start rounded-full bg-gold px-6 py-3 text-sm font-bold text-night transition hover:bg-gold-soft sm:self-center"
         >
-          교육 신청하기 →
+          문의하기 →
         </Link>
       </div>
     </aside>

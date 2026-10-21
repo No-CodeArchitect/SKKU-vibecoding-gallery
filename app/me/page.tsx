@@ -48,7 +48,7 @@ export default async function MePage({
         {!member ? (
           <div className="mt-8 rounded-2xl bg-coal p-6 ring-1 ring-white/10">
             <p className="mb-5 text-sm leading-relaxed text-white/60">
-              교육생은 구글 계정으로 로그인한 뒤, 자기 과정(섹션)에 가입을 신청합니다. 강사가
+              참가자는 구글 계정으로 로그인한 뒤, 참가할 섹션에 가입을 신청합니다. 운영진이
               수락하면 채점·댓글·작품 등록을 할 수 있습니다.
             </p>
             <GoogleButton next="/me" />
@@ -99,7 +99,7 @@ export default async function MePage({
               <>
                 <h2 className="mt-10 text-sm font-bold text-white">다른 섹션 가입 신청</h2>
                 <p className="mt-1 text-xs text-white/40">
-                  내가 듣는 과정을 골라 가입을 신청하세요. 강사가 수락해야 이용할 수 있습니다.
+                  참가할 섹션을 골라 가입을 신청하세요. 운영진이 수락해야 이용할 수 있습니다.
                 </p>
                 <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {others.map((c) => (

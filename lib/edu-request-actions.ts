@@ -25,7 +25,7 @@ const FIELDS = {
   message: { max: 1000, required: false },
 } as const;
 
-// 공개: 부대 교육 신청 접수
+// 공개: 교육·해커톤 문의 접수
 export async function submitEduRequest(
   _prev: ApplyState,
   formData: FormData

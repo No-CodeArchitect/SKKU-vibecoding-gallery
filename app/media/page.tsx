@@ -30,7 +30,7 @@ export default async function MediaPage() {
             영상 · 미디어
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-white/60">
-            교육 하이라이트와 현장 스케치를 모았습니다.
+            해커톤 하이라이트와 현장 스케치를 모았습니다.
           </p>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default async function MediaPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {["교육 하이라이트", "발표 현장", "인터뷰", "실습 스케치", "수료식", "메이킹"].map(
+            {["해커톤 하이라이트", "결과 발표", "인터뷰", "개발 현장", "시상식", "메이킹"].map(
               (l, i) => (
                 <div
                   key={i}

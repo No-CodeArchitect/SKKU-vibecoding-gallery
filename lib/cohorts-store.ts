@@ -19,7 +19,7 @@ export const DEFAULT_MIN_RATERS = 3;
 const DEFAULT_COHORT: Cohort = {
   id: "c1",
   slug: "1cha",
-  name: "AI 보수교육 1차",
+  name: "바이브코딩 해커톤 1차",
   scoringOpen: true,
   rankRevealed: false,
   minRaters: DEFAULT_MIN_RATERS,
