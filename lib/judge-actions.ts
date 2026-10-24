@@ -6,6 +6,7 @@ import { setJudgeScore } from "./judge-scores-store";
 import { getCohortById } from "./cohorts-store";
 import { getProjectById } from "./projects-data";
 import { parseRubricScore, SCORE_MAX } from "./scoring";
+import { appendScoreHistory } from "./score-history-store";
 
 export interface JudgeScoreState {
   ok: boolean;
@@ -42,6 +43,16 @@ export async function submitJudgeScore(
     console.error("[judge-score]", (err as Error).message);
     return { ok: false, error: "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };
   }
+  await appendScoreHistory({
+    projectId,
+    cohortId: cohort.id,
+    raterType: "judge",
+    raterId: judge.email,
+    raterName: judge.name,
+    completeness,
+    creativity,
+    comment,
+  });
   revalidatePath("/judge");
   revalidatePath("/admin");
   return { ok: true, error: null };

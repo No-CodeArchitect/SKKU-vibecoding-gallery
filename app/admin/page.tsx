@@ -32,7 +32,8 @@ import { distinctRaterCountFor } from "@/lib/scores-store";
 import { listAllComments } from "@/lib/comments-store";
 import { listJudges } from "@/lib/judges-store";
 import { allJudgeScoreRows } from "@/lib/judge-scores-store";
-import { WEIGHTS } from "@/lib/scoring";
+import { getWeights } from "@/lib/weights-store";
+import WeightsForm from "@/components/WeightsForm";
 import { listMedia } from "@/lib/media-items";
 import MediaManager from "@/components/MediaManager";
 
@@ -58,6 +59,7 @@ export default async function AdminDashboard() {
   const newRequests = eduRequests.filter((r) => r.status === "new").length;
   const apiReady = hasApiKey();
 
+  const WEIGHTS = await getWeights();
   const judges = await listJudges();
   const judgeRows = await allJudgeScoreRows();
   const judgeName = new Map(judges.map((j) => [j.email, j.name]));
@@ -201,6 +203,16 @@ export default async function AdminDashboard() {
               관리자 추가
             </button>
           </form>
+        </section>
+
+        {/* 종합 점수 배점 */}
+        <section className="rounded-2xl bg-coal p-5 ring-1 ring-white/10">
+          <h2 className="text-sm font-bold text-white">종합 점수 배점</h2>
+          <p className="mb-4 mt-1 text-xs text-white/50">
+            동료평가·심사위원·AI 평가를 몇 점씩 반영할지 정합니다 (합계 100). 모든 섹션의 순위
+            미리보기·결과 발표·갤러리 순위에 바로 반영되며, 이미 받은 점수는 그대로 다시 계산됩니다.
+          </p>
+          <WeightsForm current={WEIGHTS} />
         </section>
 
         {/* 심사위원 (구글 이메일 등록) */}
@@ -598,6 +610,18 @@ export default async function AdminDashboard() {
             <div className="mt-5">
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <h3 className="text-sm font-bold text-white">순위 미리보기 (관리자 전용)</h3>
+                <a
+                  href={`/api/admin/scores-csv?cohortId=${encodeURIComponent(c.id)}&type=final`}
+                  className="rounded bg-white/10 px-2 py-1 text-xs font-semibold text-white/70 hover:bg-white/20"
+                >
+                  최종 점수 CSV
+                </a>
+                <a
+                  href={`/api/admin/scores-csv?cohortId=${encodeURIComponent(c.id)}`}
+                  className="rounded bg-white/10 px-2 py-1 text-xs font-semibold text-white/70 hover:bg-white/20"
+                >
+                  평가 기록 CSV
+                </a>
                 <form action={setMinRatersAction} className="ml-auto flex items-center gap-2 text-xs text-white/60">
                   <input type="hidden" name="cohortId" value={c.id} />
                   최소 채점 인원
@@ -617,7 +641,7 @@ export default async function AdminDashboard() {
               </div>
               <p className="mb-2 text-xs text-white/40">
                 동료평가 인원이 {c.minRaters}명 미만인 작품은 순위에서 빠지고 「채점 부족」으로 표시됩니다.
-                평가가 없는 항목은 0점으로 계산합니다.
+                평가가 없는 항목은 0점으로 계산합니다. 작품명을 누르면 평가자별 점수와 누적 기록을 볼 수 있습니다.
               </p>
             {ranked.length > 0 && (
               <div className="overflow-x-auto">
@@ -637,7 +661,9 @@ export default async function AdminDashboard() {
                       <tr key={p.id}>
                         <td className="py-2 text-center font-black text-gold">{p.rank ?? "-"}</td>
                         <td className="py-2 text-white">
-                          {p.title}
+                          <Link href={`/admin/scores/${p.id}`} className="hover:text-gold hover:underline">
+                            {p.title}
+                          </Link>
                           <span className="ml-2 text-xs text-white/40">{p.authorName}</span>
                         </td>
                         <td className="py-2 text-right text-white/70">

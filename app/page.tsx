@@ -8,7 +8,6 @@ import { getProjects } from "@/lib/projects-data";
 import { listCohorts } from "@/lib/cohorts-store";
 import ProjectCard from "@/components/ProjectCard";
 import EduBanner from "@/components/site/EduBanner";
-import { WEIGHTS } from "@/lib/scoring";
 
 // 관리자가 올린 미디어가 바로 반영되도록 요청 시 렌더.
 export const dynamic = "force-dynamic";
@@ -115,19 +114,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 평가 배점 밴드 */}
+      {/* 과정 소개 밴드 */}
       <section className="border-y border-white/10 bg-night-soft">
         <div className="mx-auto grid max-w-6xl grid-cols-3 divide-x divide-white/10 px-4 sm:px-6">
-          {[
-            { n: `${WEIGHTS.peer}점`, l: "동료평가" },
-            { n: `${WEIGHTS.judge}점`, l: "심사위원 평가" },
-            { n: `${WEIGHTS.ai}점`, l: "AI 평가" },
-          ].map((s) => (
-            <div key={s.l} className="px-2 py-8 text-center sm:py-10">
-              <div className="text-3xl font-black text-gold sm:text-4xl">
-                {s.n}
+          {["정책·제도 수립", "소요기획 및 사업관리", "리더십 과정"].map((name, i) => (
+            <div key={name} className="px-2 py-8 text-center sm:py-10">
+              <div className="text-xs font-bold tracking-widest text-white/40 sm:text-sm">
+                과정 0{i + 1}
               </div>
-              <div className="mt-1 text-xs text-white/50 sm:text-sm">{s.l}</div>
+              <div className="mt-2 text-base font-black leading-snug text-gold sm:text-2xl">
+                {name}
+              </div>
             </div>
           ))}
         </div>

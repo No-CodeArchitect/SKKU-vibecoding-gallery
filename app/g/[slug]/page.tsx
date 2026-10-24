@@ -11,6 +11,7 @@ import { scoredProjectIds } from "@/lib/scores-store";
 import { getCohortBySlug } from "@/lib/cohorts-store";
 import { rankProjects } from "@/lib/ranking";
 import { isAdmin } from "@/lib/admin-session";
+import { getWeights } from "@/lib/weights-store";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,7 @@ export default async function SectionGalleryPage({
   // 이 섹션에서 수락된 참가자만 "로그인 상태"로 인정 (섹션 간 분리)
   const student = await getStudent(cohort.id);
   const admin = await isAdmin(); // 결과 발표 버튼은 관리자에게만
+  const weights = await getWeights();
   const member = student ? null : await getMember();
   const pendingJoin =
     member && (await getMembership(cohort.id, member.sub))?.status === "pending";
@@ -98,8 +100,8 @@ export default async function SectionGalleryPage({
               </h1>
               <p className="text-sm text-white/50">
                 참가자들이 만든 프로젝트를 둘러보고, 완성도와 창의성을 10점 만점으로
-                채점하고, 댓글을 남겨보세요. 최종 순위는 동료평가 70 · 심사위원 20 · AI 평가
-                10으로 합산합니다.
+                채점하고, 댓글을 남겨보세요. 최종 순위는 동료평가 {weights.peer} · 심사위원{" "}
+                {weights.judge} · AI 평가 {weights.ai}으로 합산합니다.
               </p>
             </div>
 

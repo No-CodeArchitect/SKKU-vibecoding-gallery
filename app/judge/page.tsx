@@ -8,7 +8,7 @@ import { listCohorts } from "@/lib/cohorts-store";
 import { getProjects } from "@/lib/projects-data";
 import { logout } from "@/lib/auth-actions";
 import { ssoEnabled } from "@/lib/google-oauth";
-import { WEIGHTS } from "@/lib/scoring";
+import { getWeights } from "@/lib/weights-store";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +63,7 @@ export default async function JudgePage() {
   }
 
   const mine = await judgeScoresBy(judge.email);
+  const WEIGHTS = await getWeights();
   const cohorts = await listCohorts();
   const sections = (
     await Promise.all(cohorts.map(async (c) => ({ c, projects: await getProjects(c.id) })))

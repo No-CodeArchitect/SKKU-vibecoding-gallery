@@ -6,6 +6,7 @@ import { setScore } from "./scores-store";
 import { getCohortById } from "./cohorts-store";
 import { getProjectById } from "./projects-data";
 import { parseRubricScore, SCORE_MAX } from "./scoring";
+import { appendScoreHistory } from "./score-history-store";
 
 export interface ScoreState {
   ok: boolean;
@@ -50,6 +51,16 @@ export async function submitScore(
     console.error("[score]", (err as Error).message);
     return { ok: false, error: "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요." };
   }
+  await appendScoreHistory({
+    projectId,
+    cohortId: cohort.id,
+    raterType: "peer",
+    raterId: student.id,
+    raterName: `${student.name} (${student.realName})`,
+    completeness,
+    creativity,
+    comment: "",
+  });
   revalidatePath(`/g/${cohort.slug}`);
   revalidatePath(`/project/${projectId}`);
   return { ok: true, error: null };

@@ -1,6 +1,9 @@
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
-import { AI_SCORE_MAX, SCORE_MAX, WEIGHTS } from "@/lib/scoring";
+import { AI_SCORE_MAX, SCORE_MAX, type Weights } from "@/lib/scoring";
+import { getWeights } from "@/lib/weights-store";
+
+export const dynamic = "force-dynamic"; // 관리자가 바꾼 배점을 바로 반영
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -13,8 +16,8 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-// 평가 방식 (lib/scoring.ts 의 배점과 같은 값)
-const CRITERIA = [
+// 평가 방식 (관리자가 정한 배점)
+const criteria = (WEIGHTS: Weights) => [
   {
     name: "동료평가",
     weight: WEIGHTS.peer,
@@ -42,7 +45,8 @@ const FLOW = [
   "점수 합산 · 결과 발표",
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const CRITERIA = criteria(await getWeights());
   return (
     <div className="min-h-screen bg-night text-white">
       <SiteHeader />

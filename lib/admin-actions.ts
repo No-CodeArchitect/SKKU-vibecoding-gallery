@@ -25,6 +25,8 @@ import {
 } from "./memberships-store";
 import { setCommentHidden } from "./comments-store";
 import { addJudge, removeJudge } from "./judges-store";
+import { setWeights } from "./weights-store";
+import { validateWeights, type Weights } from "./scoring";
 
 export interface AdminLoginState {
   error: string | null;
@@ -156,6 +158,30 @@ export async function removeJudgeAction(formData: FormData): Promise<void> {
   const email = String(formData.get("email") ?? "");
   if (email) await removeJudge(email);
   refresh();
+}
+
+// --- 종합 점수 배점 ---
+export interface WeightsState {
+  ok: boolean;
+  error: string | null;
+}
+
+export async function setWeightsAction(_prev: WeightsState, formData: FormData): Promise<WeightsState> {
+  await requireAdmin();
+  const w: Weights = {
+    peer: Number(formData.get("peer")),
+    judge: Number(formData.get("judge")),
+    ai: Number(formData.get("ai")),
+  };
+  const err = validateWeights(w);
+  if (err) return { ok: false, error: err };
+  try {
+    await setWeights(w);
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+  refresh();
+  return { ok: true, error: null };
 }
 
 // --- 결과 발표 ---

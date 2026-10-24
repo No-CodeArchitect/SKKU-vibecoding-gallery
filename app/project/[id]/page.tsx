@@ -9,7 +9,7 @@ import { getScore } from "@/lib/scores-store";
 import { listComments } from "@/lib/comments-store";
 import { getCohortById } from "@/lib/cohorts-store";
 import { rankProjects } from "@/lib/ranking";
-import { WEIGHTS } from "@/lib/scoring";
+import { getWeights } from "@/lib/weights-store";
 import type { Project } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -92,6 +92,7 @@ export default async function ProjectDetailPage({
     rank = ranked?.rank ?? null;
   }
   const b = ranked?.breakdown;
+  const WEIGHTS = await getWeights();
 
   return (
     <main className="min-h-screen bg-night text-white">

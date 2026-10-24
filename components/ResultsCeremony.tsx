@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ScoreBreakdown } from "@/lib/types";
-import { AI_SCORE_MAX, SCORE_MAX, WEIGHTS } from "@/lib/scoring";
+import { AI_SCORE_MAX, SCORE_MAX, type Weights } from "@/lib/scoring";
 import { publishResultsAction } from "@/lib/admin-actions";
 
 export interface CeremonyEntry {
@@ -68,7 +68,9 @@ export default function ResultsCeremony({
   entries,
   unrankedCount,
   minRaters,
+  weights,
 }: {
+  weights: Weights;
   cohortId: string;
   cohortName: string;
   slug: string;
@@ -203,6 +205,7 @@ export default function ResultsCeremony({
               unrankedCount={unrankedCount}
               minRaters={minRaters}
               scoringOpen={scoringOpen}
+              weights={weights}
               onStart={next}
             />
           )}
@@ -213,6 +216,7 @@ export default function ResultsCeremony({
             <Reveal
               key={`r${stage.idx}`}
               entry={order[stage.idx]}
+              weights={weights}
               isLast={stage.idx + 1 >= order.length}
               onNext={next}
             />
@@ -243,12 +247,14 @@ function Intro({
   unrankedCount,
   minRaters,
   scoringOpen,
+  weights: WEIGHTS,
   onStart,
 }: {
   count: number;
   unrankedCount: number;
   minRaters: number;
   scoringOpen: boolean;
+  weights: Weights;
   onStart: () => void;
 }) {
   return (
@@ -343,10 +349,12 @@ function Suspense({ rank, ms }: { rank: number; ms: number }) {
 
 function Reveal({
   entry,
+  weights: WEIGHTS,
   isLast,
   onNext,
 }: {
   entry: CeremonyEntry;
+  weights: Weights;
   isLast: boolean;
   onNext: () => void;
 }) {
