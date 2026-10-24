@@ -120,7 +120,7 @@ export default async function AdminDashboard() {
     <main className="min-h-screen bg-night text-white">
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-5 sm:px-6">
-          <span className="rounded-md bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">
+          <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-bold text-brand">
             관리자 콘솔
           </span>
           <div className="flex items-center gap-3">
@@ -129,7 +129,7 @@ export default async function AdminDashboard() {
                 {me}
               </span>
             )}
-            <Link href="/" className="text-sm font-semibold text-white/50 hover:text-gold">
+            <Link href="/" className="text-sm font-semibold text-white/50 hover:text-brand">
               홈
             </Link>
             <form action={adminLogout}>
@@ -163,7 +163,7 @@ export default async function AdminDashboard() {
             {owners.map((e) => (
               <li key={e} className="flex items-center gap-3 px-3 py-2 text-sm">
                 <span className="flex-1 text-white">{e}</span>
-                <span className="rounded bg-gold/15 px-2 py-0.5 text-xs font-semibold text-gold">
+                <span className="rounded bg-brand/15 px-2 py-0.5 text-xs font-semibold text-brand">
                   소유자 (환경변수)
                 </span>
               </li>
@@ -197,9 +197,9 @@ export default async function AdminDashboard() {
               type="email"
               required
               placeholder="추가할 관리자 구글 이메일 (예: name@gmail.com)"
-              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
+              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
             />
-            <button className="rounded-lg bg-gold px-4 py-2 text-sm font-bold text-night transition hover:bg-gold-soft">
+            <button className="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-night transition hover:bg-brand-soft">
               관리자 추가
             </button>
           </form>
@@ -222,13 +222,13 @@ export default async function AdminDashboard() {
             <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs font-semibold text-white/60">
               {judges.length}명
             </span>
-            <Link href="/judge" className="ml-auto text-xs font-semibold text-gold hover:underline">
+            <Link href="/judge" className="ml-auto text-xs font-semibold text-brand hover:underline">
               심사 페이지 →
             </Link>
           </div>
           <p className="mb-4 mt-1 text-xs text-white/50">
             심사위원의 구글 이메일을 등록하면 그 계정으로{" "}
-            <span className="font-mono text-gold">{origin}/judge</span> 에 로그인해 모든 섹션 작품을
+            <span className="font-mono text-brand">{origin}/judge</span> 에 로그인해 모든 섹션 작품을
             1~10점으로 채점합니다. 심사위원 점수는 종합 점수의 {WEIGHTS.judge}%입니다.
           </p>
 
@@ -255,16 +255,16 @@ export default async function AdminDashboard() {
               required
               maxLength={30}
               placeholder="이름 (예: 김교수)"
-              className="rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20 sm:w-40"
+              className="rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-40"
             />
             <input
               name="email"
               type="email"
               required
               placeholder="심사위원 구글 이메일"
-              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
+              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
             />
-            <button className="rounded-lg bg-gold px-4 py-2 text-sm font-bold text-night transition hover:bg-gold-soft">
+            <button className="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-night transition hover:bg-brand-soft">
               심사위원 등록
             </button>
           </form>
@@ -275,11 +275,11 @@ export default async function AdminDashboard() {
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-sm font-bold text-white">교육·해커톤 문의</h2>
             {newRequests > 0 && (
-              <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-black text-night">
+              <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-black text-night">
                 신규 {newRequests}
               </span>
             )}
-            <Link href="/apply" className="ml-auto text-xs font-semibold text-gold hover:underline">
+            <Link href="/apply" className="ml-auto text-xs font-semibold text-brand hover:underline">
               신청 페이지 →
             </Link>
           </div>
@@ -297,7 +297,7 @@ export default async function AdminDashboard() {
                 <li
                   key={r.id}
                   className={`rounded-lg border px-3 py-3 text-sm ${
-                    r.status === "new" ? "border-gold/40 bg-gold/5" : "border-white/10"
+                    r.status === "new" ? "border-brand/40 bg-brand/5" : "border-white/10"
                   }`}
                 >
                   <div className="flex flex-wrap items-center gap-2">
@@ -372,14 +372,14 @@ export default async function AdminDashboard() {
               name="name"
               required
               placeholder="섹션 이름 (예: 2026 가을 해커톤)"
-              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
+              className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
             />
             <input
               name="slug"
               placeholder="링크 주소 (선택, 예: 2026-fall)"
-              className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20 sm:w-56"
+              className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20 sm:w-56"
             />
-            <button className="rounded-lg bg-gold px-4 py-2.5 text-sm font-bold text-night transition hover:bg-gold-soft">
+            <button className="rounded-lg bg-brand px-4 py-2.5 text-sm font-bold text-night transition hover:bg-brand-soft">
               섹션 추가
             </button>
           </form>
@@ -392,7 +392,7 @@ export default async function AdminDashboard() {
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-lg font-black text-white">{c.name}</h2>
               {c.rankRevealed ? (
-                <span className="rounded-full bg-gold/20 px-2 py-0.5 text-xs font-bold text-gold">
+                <span className="rounded-full bg-brand/20 px-2 py-0.5 text-xs font-bold text-brand">
                   순위 공개
                 </span>
               ) : (
@@ -402,14 +402,14 @@ export default async function AdminDashboard() {
               )}
               <Link
                 href={`/g/${c.slug}`}
-                className="ml-auto text-xs font-semibold text-gold hover:underline"
+                className="ml-auto text-xs font-semibold text-brand hover:underline"
               >
                 갤러리 열기 →
               </Link>
             </div>
             <div className="mt-2 rounded-lg bg-night px-3 py-2 text-xs text-white/60 ring-1 ring-white/10">
               참가자 배부 링크:{" "}
-              <span className="font-mono text-gold">{origin}/g/{c.slug}</span>
+              <span className="font-mono text-brand">{origin}/g/{c.slug}</span>
             </div>
 
             {/* 운영 토글 */}
@@ -428,7 +428,7 @@ export default async function AdminDashboard() {
                     className={`rounded-lg px-3 py-1.5 text-xs font-bold ${
                       c.scoringOpen
                         ? "bg-red-500 text-white hover:bg-red-600"
-                        : "bg-gold text-night hover:bg-gold-soft"
+                        : "bg-brand text-night hover:bg-brand-soft"
                     }`}
                   >
                     {c.scoringOpen ? "채점 마감" : "채점 열기"}
@@ -459,9 +459,9 @@ export default async function AdminDashboard() {
             </div>
 
             {/* 결과 발표 (관리자 전용) */}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold/40 bg-gold/5 px-4 py-3">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/40 bg-brand/5 px-4 py-3">
               <div className="text-sm">
-                <div className="font-bold text-gold">🏆 결과 발표</div>
+                <div className="font-bold text-brand">🏆 결과 발표</div>
                 <div className="text-xs text-white/50">
                   동료평가 {WEIGHTS.peer} + 심사위원 {WEIGHTS.judge} + AI {WEIGHTS.ai} 자동 합산 →
                   3위·2위·1위 순서로 발표합니다. 누르면 동료평가가 마감됩니다.
@@ -469,7 +469,7 @@ export default async function AdminDashboard() {
               </div>
               <form action={startCeremonyAction}>
                 <input type="hidden" name="cohortId" value={c.id} />
-                <button className="rounded-lg bg-gold px-4 py-2 text-sm font-black text-night shadow-[0_0_20px_rgba(217,164,65,0.35)] transition hover:bg-gold-soft">
+                <button className="rounded-lg bg-brand px-4 py-2 text-sm font-black text-night shadow-[0_0_20px_rgba(141,198,63,0.35)] transition hover:bg-brand-soft">
                   점수 합산 · 결과 발표
                 </button>
               </form>
@@ -509,7 +509,7 @@ export default async function AdminDashboard() {
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-sm font-bold text-white">가입 신청 · 참가자</h3>
                 {pendingMembers.length > 0 && (
-                  <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-black text-night">
+                  <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-black text-night">
                     대기 {pendingMembers.length}
                   </span>
                 )}
@@ -520,12 +520,12 @@ export default async function AdminDashboard() {
               </p>
 
               {pendingMembers.length > 0 && (
-                <div className="mt-3 rounded-xl border border-gold/40 bg-gold/5 p-3">
+                <div className="mt-3 rounded-xl border border-brand/40 bg-brand/5 p-3">
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <span className="text-xs font-bold text-gold">수락 대기</span>
+                    <span className="text-xs font-bold text-brand">수락 대기</span>
                     <form action={approveAllAction}>
                       <input type="hidden" name="cohortId" value={c.id} />
-                      <button className="rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-night hover:bg-gold-soft">
+                      <button className="rounded-lg bg-brand px-3 py-1.5 text-xs font-bold text-night hover:bg-brand-soft">
                         대기 {pendingMembers.length}명 전체 수락
                       </button>
                     </form>
@@ -571,7 +571,7 @@ export default async function AdminDashboard() {
 
               {rejectedMembers.length > 0 && (
                 <details className="mt-2">
-                  <summary className="cursor-pointer text-xs text-white/40 hover:text-gold">
+                  <summary className="cursor-pointer text-xs text-white/40 hover:text-brand">
                     거절·취소된 신청 {rejectedMembers.length}건
                   </summary>
                   <ul className="mt-2 divide-y divide-white/10 rounded-lg ring-1 ring-white/10">
@@ -631,7 +631,7 @@ export default async function AdminDashboard() {
                     min={1}
                     max={50}
                     defaultValue={c.minRaters}
-                    className="w-14 rounded border border-white/15 bg-coal-soft px-2 py-1 text-white outline-none focus:border-gold"
+                    className="w-14 rounded border border-white/15 bg-coal-soft px-2 py-1 text-white outline-none focus:border-brand"
                   />
                   명
                   <button className="rounded bg-white/10 px-2 py-1 font-semibold text-white/80 hover:bg-white/20">
@@ -659,9 +659,9 @@ export default async function AdminDashboard() {
                   <tbody className="divide-y divide-white/10">
                     {ranked.map((p) => (
                       <tr key={p.id}>
-                        <td className="py-2 text-center font-black text-gold">{p.rank ?? "-"}</td>
+                        <td className="py-2 text-center font-black text-brand">{p.rank ?? "-"}</td>
                         <td className="py-2 text-white">
-                          <Link href={`/admin/scores/${p.id}`} className="hover:text-gold hover:underline">
+                          <Link href={`/admin/scores/${p.id}`} className="hover:text-brand hover:underline">
                             {p.title}
                           </Link>
                           <span className="ml-2 text-xs text-white/40">{p.authorName}</span>
@@ -681,7 +681,7 @@ export default async function AdminDashboard() {
                           <span className="ml-1 text-xs text-white/40">({p.breakdown?.judgeCount ?? 0}명)</span>
                         </td>
                         <td className="py-2 text-right text-white/70">{p.breakdown?.aiPoints.toFixed(1)}</td>
-                        <td className="py-2 text-right font-bold text-gold">
+                        <td className="py-2 text-right font-bold text-brand">
                           {p.totalScore !== null ? p.totalScore.toFixed(1) : "-"}
                         </td>
                       </tr>
@@ -692,7 +692,7 @@ export default async function AdminDashboard() {
             )}
             {judgeComments.length > 0 && (
               <details className="mt-3">
-                <summary className="cursor-pointer text-xs text-white/50 hover:text-gold">
+                <summary className="cursor-pointer text-xs text-white/50 hover:text-brand">
                   심사위원 코멘트 {judgeComments.length}건
                 </summary>
                 <ul className="mt-2 flex flex-col gap-2">
@@ -743,7 +743,7 @@ export default async function AdminDashboard() {
                           <button
                             className={`rounded px-2 py-0.5 text-xs font-semibold ${
                               cm.isHidden
-                                ? "bg-gold text-night hover:bg-gold-soft"
+                                ? "bg-brand text-night hover:bg-brand-soft"
                                 : "bg-white/10 text-white/70 hover:bg-white/20"
                             }`}
                           >
@@ -765,7 +765,7 @@ export default async function AdminDashboard() {
 }
 
 const EDU_STATUS: Record<EduRequestStatus, { label: string; tone: string }> = {
-  new: { label: "신규", tone: "bg-gold/20 text-gold" },
+  new: { label: "신규", tone: "bg-brand/20 text-brand" },
   contacted: { label: "연락함", tone: "bg-sky-500/20 text-sky-300" },
   done: { label: "완료", tone: "bg-white/10 text-white/60" },
 };
@@ -800,7 +800,7 @@ function MemberButton({
       <button
         className={`rounded px-2 py-0.5 text-xs font-semibold ${
           primary
-            ? "bg-gold text-night hover:bg-gold-soft"
+            ? "bg-brand text-night hover:bg-brand-soft"
             : "bg-white/10 text-white/70 hover:bg-white/20"
         }`}
       >

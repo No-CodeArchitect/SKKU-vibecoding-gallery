@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic";
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {children}
       </span>
     </div>
@@ -60,7 +60,7 @@ export default async function MediaPage() {
                 >
                   <div className="relative flex aspect-video items-center justify-center bg-white/[0.05]">
                     <span className="text-xs text-white/35">{l} 영상 자리</span>
-                    <div className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-night">
+                    <div className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand/90 text-night">
                       ▶
                     </div>
                   </div>

@@ -21,7 +21,7 @@ export default async function JudgePage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-night px-4 text-white">
         <div className="w-full max-w-sm rounded-2xl bg-coal p-6 ring-1 ring-white/10">
-          <span className="rounded-md bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">
+          <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-bold text-brand">
             심사위원
           </span>
           <h1 className="mt-3 text-xl font-black">심사위원 로그인</h1>
@@ -54,7 +54,7 @@ export default async function JudgePage() {
               </form>
             </>
           )}
-          <Link href="/" className="mt-4 block text-center text-xs text-white/40 hover:text-gold">
+          <Link href="/" className="mt-4 block text-center text-xs text-white/40 hover:text-brand">
             ← 홈으로
           </Link>
         </div>
@@ -74,7 +74,7 @@ export default async function JudgePage() {
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
           <div>
-            <span className="rounded-md bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">
+            <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-bold text-brand">
               심사위원 평가
             </span>
             <h1 className="mt-2 text-2xl font-black tracking-tight">{judge.name} 심사위원님</h1>
@@ -108,7 +108,7 @@ export default async function JudgePage() {
                   className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
                     done === projects.length
                       ? "bg-emerald-500/20 text-emerald-300"
-                      : "bg-gold/15 text-gold"
+                      : "bg-brand/15 text-brand"
                   }`}
                 >
                   {done} / {projects.length} 채점
@@ -156,11 +156,11 @@ export default async function JudgePage() {
                               href={p.liveUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-gold hover:text-gold-soft"
+                              className="text-brand hover:text-brand-soft"
                             >
                               사이트 열기 ↗
                             </a>
-                            <Link href={`/project/${p.id}`} className="text-white/50 hover:text-gold">
+                            <Link href={`/project/${p.id}`} className="text-white/50 hover:text-brand">
                               상세 보기
                             </Link>
                           </div>

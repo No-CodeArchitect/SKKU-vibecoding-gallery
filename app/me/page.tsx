@@ -79,7 +79,7 @@ export default async function MePage({
                     <li key={m.id}>
                       <Link
                         href={m.status === "approved" ? `/g/${c.slug}` : `/g/${c.slug}/join`}
-                        className="flex items-center justify-between gap-3 rounded-xl bg-coal px-4 py-3 ring-1 ring-white/10 transition hover:ring-gold/40"
+                        className="flex items-center justify-between gap-3 rounded-xl bg-coal px-4 py-3 ring-1 ring-white/10 transition hover:ring-brand/40"
                       >
                         <div>
                           <div className="font-bold text-white">{c.name}</div>
@@ -106,10 +106,10 @@ export default async function MePage({
                     <li key={c.id}>
                       <Link
                         href={`/g/${c.slug}/join`}
-                        className="flex items-center justify-between rounded-xl border border-white/10 px-4 py-3 text-sm transition hover:border-gold/50"
+                        className="flex items-center justify-between rounded-xl border border-white/10 px-4 py-3 text-sm transition hover:border-brand/50"
                       >
                         <span className="font-semibold text-white/80">{c.name}</span>
-                        <span className="text-xs font-bold text-gold">신청 →</span>
+                        <span className="text-xs font-bold text-brand">신청 →</span>
                       </Link>
                     </li>
                   ))}

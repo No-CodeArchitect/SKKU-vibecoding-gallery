@@ -66,7 +66,7 @@ body {
 .ceremony-heartbeat { animation: ceremony-heartbeat 0.9s ease-in-out infinite; }
 .ceremony-shake { animation: ceremony-shake 0.12s linear infinite; }
 .ceremony-progress { animation: ceremony-progress linear forwards; }
-.ceremony-count { animation: ceremony-count 1s ease-out forwards; text-shadow: 0 0 40px rgba(217, 164, 65, 0.8); }
+.ceremony-count { animation: ceremony-count 1s ease-out forwards; text-shadow: 0 0 40px rgba(226, 181, 68, 0.8); }
 .ceremony-grow { transform-origin: bottom; animation: ceremony-grow 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
 .ceremony-beam {
   background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.07) 20deg, transparent 40deg,
@@ -75,7 +75,7 @@ body {
   animation: ceremony-spin 6s linear infinite;
 }
 .ceremony-rays {
-  background: repeating-conic-gradient(rgba(217, 164, 65, 0.16) 0deg 8deg, transparent 8deg 22deg);
+  background: repeating-conic-gradient(rgba(226, 181, 68, 0.16) 0deg 8deg, transparent 8deg 22deg);
   border-radius: 9999px;
   mask-image: radial-gradient(circle, black 15%, transparent 60%);
   -webkit-mask-image: radial-gradient(circle, black 15%, transparent 60%);

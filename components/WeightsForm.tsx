@@ -34,7 +34,7 @@ export default function WeightsForm({ current }: { current: Weights }) {
                 required
                 value={Number.isNaN(w[f.key]) ? "" : w[f.key]}
                 onChange={(e) => setW({ ...w, [f.key]: e.target.valueAsNumber })}
-                className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm font-bold text-white outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
+                className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm font-bold text-white outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <span className="text-white/40">점</span>
             </span>
@@ -49,14 +49,14 @@ export default function WeightsForm({ current }: { current: Weights }) {
         <button
           type="button"
           onClick={() => setW(DEFAULT_WEIGHTS)}
-          className="ml-auto rounded-lg px-3 py-1.5 text-xs text-white/50 hover:text-gold"
+          className="ml-auto rounded-lg px-3 py-1.5 text-xs text-white/50 hover:text-brand"
         >
           기본값 (70/20/10)
         </button>
         <button
           type="submit"
           disabled={pending || sum !== 100}
-          className="rounded-lg bg-gold px-4 py-1.5 text-xs font-bold text-night transition hover:bg-gold-soft disabled:opacity-50"
+          className="rounded-lg bg-brand px-4 py-1.5 text-xs font-bold text-night transition hover:bg-brand-soft disabled:opacity-50"
         >
           {pending ? "저장 중…" : "배점 저장"}
         </button>

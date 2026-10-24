@@ -9,8 +9,8 @@ export type EduRequestStatus = "new" | "contacted" | "done";
 
 export interface EduRequest {
   id: string;
-  unit: string; // 소속(학과·기관)명
-  contactName: string; // 담당자 성명
+  unit: string; // 소속(부대·기관·회사)
+  contactName: string; // 담당자 계급(직급)·성명
   phone: string;
   email: string;
   headcount: string;

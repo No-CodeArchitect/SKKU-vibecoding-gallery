@@ -121,7 +121,7 @@ export default function SubmissionsPanel({
           type="button"
           disabled={busy || queue.length === 0}
           onClick={() => runQueue(queue.map((r) => r.id))}
-          className="rounded-lg bg-gold px-4 py-2 text-sm font-bold text-night transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-night transition hover:bg-brand-soft disabled:cursor-not-allowed disabled:opacity-40"
         >
           {queue.length > 0 ? `대기 ${queue.length}건 분석 실행` : "분석할 작품 없음"}
         </button>
@@ -158,7 +158,7 @@ export default function SubmissionsPanel({
                     <div className="flex flex-wrap items-center gap-2 text-xs">
                       <span className={`rounded-full px-2 py-0.5 font-semibold ${tone}`}>{label}</span>
                       {r.mock && r.published && <span className="text-amber-300/80">임시 요약</span>}
-                      <a href={r.liveUrl} target="_blank" rel="noopener noreferrer" className="truncate text-white/40 hover:text-gold">
+                      <a href={r.liveUrl} target="_blank" rel="noopener noreferrer" className="truncate text-white/40 hover:text-brand">
                         {r.liveUrl}
                       </a>
                     </div>
@@ -174,7 +174,7 @@ export default function SubmissionsPanel({
                     type="button"
                     disabled={busy}
                     onClick={() => runQueue([r.id])}
-                    className="rounded px-2 py-1 text-xs font-semibold text-gold hover:bg-gold/10 disabled:opacity-40"
+                    className="rounded px-2 py-1 text-xs font-semibold text-brand hover:bg-brand/10 disabled:opacity-40"
                   >
                     {r.published ? "재분석" : "분석"}
                   </button>

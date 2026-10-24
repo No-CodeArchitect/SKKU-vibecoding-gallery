@@ -6,7 +6,7 @@ import { submitEduRequest, type ApplyState } from "@/lib/edu-request-actions";
 const initialState: ApplyState = { ok: false, error: null };
 
 const inputCls =
-  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-gold focus:ring-2 focus:ring-gold/20";
+  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-brand focus:ring-2 focus:ring-brand/20";
 
 const FIELDS: {
   name: string;
@@ -17,13 +17,13 @@ const FIELDS: {
   type?: string;
   multiline?: boolean;
 }[] = [
-  { name: "unit", label: "소속(학과·기관)", required: true, max: 60, placeholder: "예: ○○학과, ○○ 동아리, ○○ 기관" },
-  { name: "contactName", label: "담당자 성명", required: true, max: 40, placeholder: "예: 홍길동" },
+  { name: "unit", label: "소속(부대·기관·회사)", required: true, max: 60, placeholder: "예: ○○사단 정보통신대대, ○○기관, ○○(주)" },
+  { name: "contactName", label: "담당자 계급(직급)·성명", required: true, max: 40, placeholder: "예: 대위 홍길동, 주무관 홍길동, 과장 홍길동" },
   { name: "phone", label: "연락처", required: true, max: 30, placeholder: "예: 010-1234-5678", type: "tel" },
   { name: "email", label: "이메일", max: 100, placeholder: "회신받을 이메일 (선택)", type: "email" },
   { name: "headcount", label: "희망 인원", max: 30, placeholder: "예: 30명 내외" },
   { name: "period", label: "희망 시기", max: 60, placeholder: "예: 2027년 3월 중, 1박 2일" },
-  { name: "message", label: "희망 내용", max: 1000, placeholder: "대상(학부생/대학원생/교직원 등), 교육·해커톤 형태, 관심 주제, 문의 사항", multiline: true },
+  { name: "message", label: "희망 내용", max: 1000, placeholder: "교육 대상(장교·부사관·군무원·임직원 등), 교육·해커톤 형태, 관심 주제, 문의 사항", multiline: true },
 ];
 
 export default function ApplyForm() {
@@ -65,7 +65,7 @@ export default function ApplyForm() {
           <div key={f.name} className="flex flex-col gap-1.5">
             <label htmlFor={f.name} className="text-sm font-semibold text-white">
               {f.label}
-              {f.required && <span className="ml-1 text-gold">*</span>}
+              {f.required && <span className="ml-1 text-brand">*</span>}
             </label>
             {f.multiline ? (
               <textarea {...common} rows={4} className={`${inputCls} resize-y`} />
@@ -77,20 +77,20 @@ export default function ApplyForm() {
       })}
 
       <p className="rounded-lg bg-white/5 px-3 py-2 text-xs leading-relaxed text-white/50">
-        주민등록번호 등 민감한 개인정보는 적지 마세요.
+        보안상 민감한 정보(부대 위치·임무·병력 세부, 회사 기밀 등)와 주민등록번호는 적지 마세요.
       </p>
 
       <div className="rounded-xl bg-night px-4 py-3 text-xs leading-relaxed text-white/55 ring-1 ring-white/10">
         <p className="font-semibold text-white/80">개인정보 수집·이용 안내</p>
         <ul className="mt-1 list-disc pl-4">
-          <li>수집 항목: 소속(학과·기관), 담당자 성명, 연락처, 이메일(선택)</li>
+          <li>수집 항목: 소속(부대·기관·회사), 담당자 계급(직급)·성명, 연락처, 이메일(선택)</li>
           <li>이용 목적: 문의 확인 및 일정 협의를 위한 연락</li>
           <li>보유 기간: 상담 종료 후 1년 이내 파기 (요청 시 즉시 파기)</li>
           <li>동의를 거부할 수 있으나, 이 경우 신청 접수가 되지 않습니다.</li>
         </ul>
         <label className="mt-3 flex items-center gap-2 text-sm text-white">
-          <input type="checkbox" name="consent" required className="h-4 w-4 accent-[#d9a441]" />
-          위 내용에 동의합니다 <span className="text-gold">*</span>
+          <input type="checkbox" name="consent" required className="h-4 w-4 accent-[#8dc63f]" />
+          위 내용에 동의합니다 <span className="text-brand">*</span>
         </label>
       </div>
 
@@ -101,7 +101,7 @@ export default function ApplyForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-gold px-4 py-3 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
+        className="rounded-lg bg-brand px-4 py-3 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-60"
       >
         {pending ? "접수 중…" : "문의 보내기"}
       </button>

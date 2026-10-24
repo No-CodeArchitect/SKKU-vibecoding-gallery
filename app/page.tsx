@@ -15,8 +15,8 @@ export const dynamic = "force-dynamic";
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {children}
       </span>
     </div>
@@ -72,7 +72,7 @@ export default async function HomePage() {
               className="absolute inset-0"
               style={{
                 backgroundImage:
-                  "radial-gradient(60% 55% at 15% 20%, rgba(217,164,65,0.16), transparent 60%), radial-gradient(45% 45% at 90% 10%, rgba(217,164,65,0.08), transparent 60%)",
+                  "radial-gradient(60% 55% at 15% 20%, rgba(141,198,63,0.16), transparent 60%), radial-gradient(45% 45% at 90% 10%, rgba(141,198,63,0.08), transparent 60%)",
               }}
             />
             <div
@@ -86,27 +86,27 @@ export default async function HomePage() {
           </>
         )}
         <div className="relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-4 py-24 sm:px-6">
-          <Eyebrow>성균관대학교 · 바이브코딩 해커톤</Eyebrow>
+          <Eyebrow>성균관대학교 국방 AI 교육 · 바이브코딩 해커톤</Eyebrow>
           <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl">
             아이디어를,
             <br />
-            <span className="text-gold">코드로 증명하다</span>
+            <span className="text-brand">코드로 증명하다</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
-            AI와 함께 코딩하는 바이브코딩으로 참가자 각자가 직접 서비스를
-            만들었습니다. 작품을 둘러보고, 동료로서 평가하고, 최종 결과 발표까지
-            함께하세요.
+            군인·군무원 교육생이 AI와 함께 코딩하는 바이브코딩으로 부대·업무 현장의
+            문제를 푸는 서비스를 직접 만들었습니다. 작품을 둘러보고, 동료로서 평가하고,
+            최종 결과 발표까지 함께하세요.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
               href="/sections"
-              className="rounded-full bg-gold px-6 py-3 text-sm font-bold text-night transition hover:bg-gold-soft"
+              className="rounded-full bg-brand px-6 py-3 text-sm font-bold text-night transition hover:bg-brand-soft"
             >
               포트폴리오 보기 →
             </Link>
             <Link
               href="/about"
-              className="rounded-full border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-gold hover:text-gold"
+              className="rounded-full border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-brand hover:text-brand"
             >
               해커톤 소개
             </Link>
@@ -122,7 +122,7 @@ export default async function HomePage() {
               <div className="text-xs font-bold tracking-widest text-white/40 sm:text-sm">
                 과정 0{i + 1}
               </div>
-              <div className="mt-2 text-base font-black leading-snug text-gold sm:text-2xl">
+              <div className="mt-2 text-base font-black leading-snug text-brand sm:text-2xl">
                 {name}
               </div>
             </div>
@@ -141,14 +141,14 @@ export default async function HomePage() {
               직접 만드는 해커톤
             </h2>
             <p className="mt-5 leading-relaxed text-white/60">
-              참가자 각자가 바이브코딩으로 실제로 작동하는 결과물을 완성하고
+              참가자 각자가 현장에서 겪던 문제를 골라 바이브코딩으로 실제로 작동하는 결과물을 완성하고
               갤러리에 등록합니다. 동료평가·심사위원 평가·AI 평가를 합산해 순위를
               정하고, 마지막 날 결과를 발표합니다. 이 사이트는 그 과정과 성과의
               기록입니다.
             </p>
             <Link
               href="/about"
-              className="mt-6 inline-block text-sm font-bold text-gold hover:text-gold-soft"
+              className="mt-6 inline-block text-sm font-bold text-brand hover:text-brand-soft"
             >
               해커톤 자세히 보기 →
             </Link>
@@ -176,7 +176,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/sections"
-              className="hidden text-sm font-bold text-gold hover:text-gold-soft sm:inline"
+              className="hidden text-sm font-bold text-brand hover:text-brand-soft sm:inline"
             >
               전체 보기 →
             </Link>
@@ -203,7 +203,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/sections"
-            className="mt-8 inline-block rounded-full bg-gold px-6 py-3 text-sm font-bold text-night transition hover:bg-gold-soft sm:hidden"
+            className="mt-8 inline-block rounded-full bg-brand px-6 py-3 text-sm font-bold text-night transition hover:bg-brand-soft sm:hidden"
           >
             전체 보기 →
           </Link>
@@ -226,7 +226,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/media"
-            className="hidden text-sm font-bold text-gold hover:text-gold-soft sm:inline"
+            className="hidden text-sm font-bold text-brand hover:text-brand-soft sm:inline"
           >
             전체 보기 →
           </Link>
@@ -247,7 +247,7 @@ export default async function HomePage() {
                   className="relative overflow-hidden rounded-xl ring-1 ring-white/10"
                 >
                   <ImgPlaceholder label={l} />
-                  <div className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-night">
+                  <div className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand/90 text-night">
                     ▶
                   </div>
                 </div>

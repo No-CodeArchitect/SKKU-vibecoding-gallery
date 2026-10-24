@@ -59,7 +59,7 @@ export default async function SubmitPage({
   return (
     <main className="min-h-screen bg-night text-white">
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <Link href={`/g/${slug}`} className="text-xs font-semibold text-white/40 hover:text-gold">
+        <Link href={`/g/${slug}`} className="text-xs font-semibold text-white/40 hover:text-brand">
           ← {cohort.name} 갤러리
         </Link>
         <h1 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">
@@ -77,7 +77,7 @@ export default async function SubmitPage({
             </p>
             <Link
               href={`/g/${slug}/join?next=submit`}
-              className="mt-4 inline-block rounded-full bg-gold px-5 py-2 text-sm font-bold text-night hover:bg-gold-soft"
+              className="mt-4 inline-block rounded-full bg-brand px-5 py-2 text-sm font-bold text-night hover:bg-brand-soft"
             >
               로그인 / 가입 신청
             </Link>
@@ -93,7 +93,7 @@ export default async function SubmitPage({
                 {record?.ai && (
                   <Link
                     href={`/project/${record.id}`}
-                    className="mt-2 inline-block text-xs font-semibold text-gold hover:underline"
+                    className="mt-2 inline-block text-xs font-semibold text-brand hover:underline"
                   >
                     공개된 내 카드 보기 →
                   </Link>

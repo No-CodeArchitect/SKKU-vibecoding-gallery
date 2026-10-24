@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic";
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {children}
       </span>
     </div>
@@ -44,24 +44,24 @@ export default async function SectionsPage() {
               <Link
                 key={c.id}
                 href={`/g/${c.slug}`}
-                className="group flex flex-col justify-between rounded-2xl bg-coal p-6 ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:ring-gold/40"
+                className="group flex flex-col justify-between rounded-2xl bg-coal p-6 ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:ring-brand/40"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
                     {c.rankRevealed ? (
-                      <span className="text-xs font-bold text-gold">순위 공개</span>
+                      <span className="text-xs font-bold text-brand">순위 공개</span>
                     ) : (
                       <span className="text-xs font-medium text-white/40">
                         {c.scoringOpen ? "채점 진행 중" : "채점 마감"}
                       </span>
                     )}
                   </div>
-                  <h2 className="mt-3 text-xl font-black text-white group-hover:text-gold">
+                  <h2 className="mt-3 text-xl font-black text-white group-hover:text-brand">
                     {c.name}
                   </h2>
                 </div>
-                <span className="mt-6 text-sm font-bold text-gold">입장 →</span>
+                <span className="mt-6 text-sm font-bold text-brand">입장 →</span>
               </Link>
             ))}
           </div>

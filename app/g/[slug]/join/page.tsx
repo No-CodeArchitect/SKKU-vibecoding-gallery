@@ -34,7 +34,7 @@ export default async function JoinPage({
     <main className="flex min-h-screen items-center justify-center bg-night px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <Link href={`/g/${slug}`} className="text-xs font-semibold text-white/40 hover:text-gold">
+          <Link href={`/g/${slug}`} className="text-xs font-semibold text-white/40 hover:text-brand">
             ← {cohort.name} 갤러리
           </Link>
           <h1 className="mt-3 text-2xl font-black tracking-tight text-white">{cohort.name}</h1>
@@ -74,7 +74,7 @@ export default async function JoinPage({
                 운영진(관리자)이 수락하면 바로 이용할 수 있습니다. 수락 후 이 페이지를 새로고침하세요.
               </p>
               <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-xs text-white/40 hover:text-gold">
+                <summary className="cursor-pointer text-xs text-white/40 hover:text-brand">
                   정보를 잘못 입력했나요?
                 </summary>
                 <div className="mt-3">
@@ -97,7 +97,7 @@ export default async function JoinPage({
             <span>{member.email}</span>
             <form action={logout}>
               <input type="hidden" name="next" value={here} />
-              <button className="underline hover:text-gold">다른 계정으로</button>
+              <button className="underline hover:text-brand">다른 계정으로</button>
             </form>
           </div>
         )}

@@ -18,19 +18,19 @@ type Field = {
 };
 
 const FIELDS: Field[] = [
-  { name: "title", label: "프로젝트명", required: true, max: 40, placeholder: "예: 강의실 빈자리 실시간 알리미" },
+  { name: "title", label: "프로젝트명", required: true, max: 40, placeholder: "예: 당직 근무표 자동 편성기" },
   { name: "liveUrl", label: "배포 주소 (URL)", required: true, max: 500, placeholder: "https://…", hint: "누구나 접속할 수 있는 공개 주소를 넣어 주세요. AI가 이 페이지 내용도 참고합니다." },
-  { name: "tagline", label: "한 줄 소개", required: true, max: 80, placeholder: "예: 공강 시간, 앉을 곳부터 찾지 말자" },
-  { name: "problem", label: "어떤 문제를 해결하나요?", required: true, multiline: true, max: 600, placeholder: "평소 겪던 불편함, 누가 어떤 상황에서 쓰는지" },
-  { name: "features", label: "주요 기능", required: true, multiline: true, max: 600, placeholder: "줄바꿈 또는 쉼표로 구분 (예: 실시간 빈 강의실, 건물·층 필터, 즐겨찾기)" },
-  { name: "militaryUseCase", label: "활용 시나리오", multiline: true, max: 600, placeholder: "실제로 누가, 어떻게 쓸 수 있는지" },
+  { name: "tagline", label: "한 줄 소개", required: true, max: 80, placeholder: "예: 엑셀 지옥 탈출, 클릭 한 번으로 공평한 근무표" },
+  { name: "problem", label: "어떤 문제를 해결하나요?", required: true, multiline: true, max: 600, placeholder: "부대·업무 현장에서 겪던 불편함, 누가 어떤 상황에서 쓰는지" },
+  { name: "features", label: "주요 기능", required: true, multiline: true, max: 600, placeholder: "줄바꿈 또는 쉼표로 구분 (예: 근무 조건 입력, 자동 편성, 엑셀 내보내기)" },
+  { name: "militaryUseCase", label: "현장 활용 시나리오", multiline: true, max: 600, placeholder: "부대·기관·업무 현장에서 실제로 어떻게 쓰일 수 있는지" },
   { name: "techStack", label: "사용한 도구·기술", max: 200, placeholder: "예: Claude, Cursor, Vercel, Google Sheets" },
   { name: "repoUrl", label: "소스코드 주소 (선택)", max: 500, placeholder: "https://github.com/…" },
   { name: "notes", label: "제작 후기 · 어려웠던 점", multiline: true, max: 600, placeholder: "자유롭게" },
 ];
 
 const inputCls =
-  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-gold focus:ring-2 focus:ring-gold/20";
+  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-brand focus:ring-2 focus:ring-brand/20";
 
 export default function SubmitProjectForm({
   cohortId,
@@ -51,7 +51,7 @@ export default function SubmitProjectForm({
       <input type="hidden" name="cohortId" value={cohortId} />
       <div className="flex flex-col gap-1.5">
         <span className="text-sm font-semibold text-white">
-          썸네일 (대표 이미지)<span className="ml-1 text-gold">*</span>
+          썸네일 (대표 이미지)<span className="ml-1 text-brand">*</span>
         </span>
         <ThumbnailUploader
           currentUrl={initialThumbUrl}
@@ -86,7 +86,7 @@ export default function SubmitProjectForm({
           <div key={f.name} className="flex flex-col gap-1.5">
             <label htmlFor={f.name} className="text-sm font-semibold text-white">
               {f.label}
-              {f.required && <span className="ml-1 text-gold">*</span>}
+              {f.required && <span className="ml-1 text-brand">*</span>}
             </label>
             {f.multiline ? (
               <textarea {...common} rows={3} className={`${common.className} resize-y`} />
@@ -116,7 +116,7 @@ export default function SubmitProjectForm({
         <button
           type="submit"
           disabled={pending}
-          className="rounded-lg bg-gold px-4 py-3 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
+          className="rounded-lg bg-brand px-4 py-3 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-60"
         >
           {pending ? "저장 중…" : initial ? "수정 내용 저장" : "작품 등록하기"}
         </button>

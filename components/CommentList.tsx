@@ -53,7 +53,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
                 {c.aiNickname}
               </span>
               {c.isAuthorReply && (
-                <span className="inline-flex items-center rounded-full bg-gold/15 px-2 py-0.5 text-xs font-semibold text-gold">
+                <span className="inline-flex items-center rounded-full bg-brand/15 px-2 py-0.5 text-xs font-semibold text-brand">
                   제작자
                 </span>
               )}

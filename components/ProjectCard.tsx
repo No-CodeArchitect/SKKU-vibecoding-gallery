@@ -9,10 +9,10 @@ function Badge({
   tone: "new" | "scored" | "mine" | "rank";
 }) {
   const styles: Record<typeof tone, string> = {
-    new: "bg-gold text-night",
+    new: "bg-brand text-night",
     scored: "bg-emerald-500/20 text-emerald-300",
     mine: "bg-white/10 text-white/70",
-    rank: "bg-gold/20 text-gold",
+    rank: "bg-brand/20 text-brand",
   };
   return (
     <span
@@ -29,7 +29,7 @@ function ScorePill({ label, value }: { label: string; value: number }) {
     <div className="flex items-center gap-1 rounded-md bg-white/5 px-2 py-1">
       <span className="text-[11px] text-white/40">{label}</span>
       <span className="text-xs font-bold text-white">{value.toFixed(1)}</span>
-      <span className="text-[11px] text-gold">★</span>
+      <span className="text-[11px] text-brand">★</span>
     </div>
   );
 }
@@ -66,7 +66,7 @@ export default function ProjectCard({
   minRaters?: number;
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl bg-coal ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:ring-gold/40">
+    <article className="group flex flex-col overflow-hidden rounded-2xl bg-coal ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:ring-brand/40">
       <Link href={`/project/${project.id}`} className="flex flex-1 flex-col">
         <div className="relative">
           <Thumbnail project={project} />
@@ -82,7 +82,7 @@ export default function ProjectCard({
 
         <div className="flex flex-1 flex-col gap-3 p-4">
           <div>
-            <h3 className="text-base font-bold leading-snug text-white group-hover:text-gold">
+            <h3 className="text-base font-bold leading-snug text-white group-hover:text-brand">
               {project.title}
             </h3>
             <p className="mt-1 line-clamp-2 text-sm text-white/50">
@@ -95,8 +95,8 @@ export default function ProjectCard({
           </p>
 
           {project.rank !== null && project.totalScore !== null ? (
-            <div className="mt-auto flex items-center justify-between rounded-lg bg-gold/15 px-3 py-2">
-              <span className="text-sm font-bold text-gold">
+            <div className="mt-auto flex items-center justify-between rounded-lg bg-brand/15 px-3 py-2">
+              <span className="text-sm font-bold text-brand">
                 종합 {project.totalScore.toFixed(1)}점
               </span>
               <span className="text-xs text-white/50">
@@ -131,7 +131,7 @@ export default function ProjectCard({
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm font-semibold text-gold hover:text-gold-soft"
+          className="text-sm font-semibold text-brand hover:text-brand-soft"
         >
           사이트 열기 ↗
         </a>

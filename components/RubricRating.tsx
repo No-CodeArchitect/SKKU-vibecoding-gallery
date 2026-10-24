@@ -29,7 +29,7 @@ export default function RubricRating({
           {hint && <span className="text-[11px] text-white/40">{hint}</span>}
         </span>
         <span className="text-sm font-bold text-white">
-          <span className="text-lg text-gold">{value > 0 ? value : "-"}</span>
+          <span className="text-lg text-brand">{value > 0 ? value : "-"}</span>
           <span className="text-white/40"> / {SCORE_MAX}</span>
         </span>
       </div>
@@ -48,9 +48,9 @@ export default function RubricRating({
               disabled ? "cursor-not-allowed" : "cursor-pointer hover:-translate-y-0.5"
             } ${
               n === active
-                ? "bg-gold text-night"
+                ? "bg-brand text-night"
                 : n < active
-                  ? "bg-gold/35 text-white"
+                  ? "bg-brand/35 text-white"
                   : "bg-white/5 text-white/40 ring-1 ring-white/10"
             }`}
           >

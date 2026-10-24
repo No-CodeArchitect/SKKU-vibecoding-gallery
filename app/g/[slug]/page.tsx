@@ -75,18 +75,18 @@ export default async function SectionGalleryPage({
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
           <Link
             href="/"
-            className="text-xs font-semibold text-white/40 hover:text-gold"
+            className="text-xs font-semibold text-white/40 hover:text-brand"
           >
             ← 홈으로
           </Link>
           <div className="mt-2 flex items-start justify-between gap-4">
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="rounded-md bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">
+                <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-bold text-brand">
                   {cohort.name}
                 </span>
                 {cohort.rankRevealed ? (
-                  <span className="text-xs font-bold text-gold">🏆 순위 공개</span>
+                  <span className="text-xs font-bold text-brand">🏆 순위 공개</span>
                 ) : (
                   <span className="text-xs font-medium text-white/40">
                     {cohort.scoringOpen
@@ -109,7 +109,7 @@ export default async function SectionGalleryPage({
               {admin && (
                 <Link
                   href={`/g/${slug}/present`}
-                  className="rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-night transition hover:bg-gold-soft"
+                  className="rounded-lg bg-brand px-3 py-1.5 text-xs font-bold text-night transition hover:bg-brand-soft"
                 >
                   🏆 결과 발표
                 </Link>
@@ -124,7 +124,7 @@ export default async function SectionGalleryPage({
                   </span>
                   <Link
                     href={`/g/${slug}/submit`}
-                    className="rounded-lg border border-gold/60 px-3 py-1.5 text-xs font-bold text-gold transition hover:bg-gold hover:text-night"
+                    className="rounded-lg border border-brand/60 px-3 py-1.5 text-xs font-bold text-brand transition hover:bg-brand hover:text-night"
                   >
                     {myRecord ? "내 작품" : "작품 등록"}
                   </Link>
@@ -138,7 +138,7 @@ export default async function SectionGalleryPage({
               ) : (
                 <Link
                   href={`/g/${slug}/join`}
-                  className="rounded-full border border-gold/60 px-4 py-1.5 text-xs font-bold text-gold transition hover:bg-gold hover:text-night"
+                  className="rounded-full border border-brand/60 px-4 py-1.5 text-xs font-bold text-brand transition hover:bg-brand hover:text-night"
                 >
                   {pendingJoin ? "가입 수락 대기 중" : member ? "이 섹션 가입 신청" : "로그인하고 참여하기"}
                 </Link>
@@ -161,7 +161,7 @@ export default async function SectionGalleryPage({
       {/* 내 작품 등록 상태 */}
       {student && (!myRecord || !myRecord.ai || myRecord.needsAnalysis) && (
         <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-gold/10 px-4 py-3 ring-1 ring-gold/30">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-brand/10 px-4 py-3 ring-1 ring-brand/30">
             <p className="text-sm text-white/80">
               {!myRecord
                 ? canSubmit
@@ -174,7 +174,7 @@ export default async function SectionGalleryPage({
             {(myRecord || canSubmit) && (
               <Link
                 href={`/g/${slug}/submit`}
-                className="rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-night transition hover:bg-gold-soft"
+                className="rounded-full bg-brand px-4 py-1.5 text-xs font-bold text-night transition hover:bg-brand-soft"
               >
                 {myRecord ? "내 작품 보기·수정" : "작품 등록하기 →"}
               </Link>
@@ -222,11 +222,11 @@ function Stat({
   return (
     <div
       className={`rounded-xl px-4 py-2 ring-1 ${
-        accent ? "bg-gold/10 ring-gold/30" : "bg-coal ring-white/10"
+        accent ? "bg-brand/10 ring-brand/30" : "bg-coal ring-white/10"
       }`}
     >
       <div className="text-xs text-white/50">{label}</div>
-      <div className={`text-lg font-bold ${accent ? "text-gold" : "text-white"}`}>
+      <div className={`text-lg font-bold ${accent ? "text-brand" : "text-white"}`}>
         {value}
       </div>
     </div>

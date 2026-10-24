@@ -117,8 +117,8 @@ export default function ThumbnailUploader({
         }}
         className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-xl border-2 border-dashed transition ${
           compact ? "max-w-[160px]" : ""
-        } ${over ? "border-gold bg-gold/10" : "border-white/15 bg-coal-soft"} ${
-          disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:border-gold/60"
+        } ${over ? "border-brand bg-brand/10" : "border-white/15 bg-coal-soft"} ${
+          disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:border-brand/60"
         }`}
       >
         {preview ? (
@@ -138,7 +138,7 @@ export default function ThumbnailUploader({
           </div>
         )}
         {busy && (
-          <div className="absolute inset-0 flex items-center justify-center bg-night/70 text-sm font-bold text-gold">
+          <div className="absolute inset-0 flex items-center justify-center bg-night/70 text-sm font-bold text-brand">
             {progress}%
           </div>
         )}

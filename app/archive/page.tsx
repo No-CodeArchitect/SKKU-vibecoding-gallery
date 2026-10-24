@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {children}
       </span>
     </div>
@@ -39,7 +39,7 @@ export default function ArchivePage() {
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block overflow-hidden rounded-xl ring-1 ring-white/10 transition hover:ring-gold/50"
+                className="block overflow-hidden rounded-xl ring-1 ring-white/10 transition hover:ring-brand/50"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

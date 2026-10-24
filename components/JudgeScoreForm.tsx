@@ -45,7 +45,7 @@ export default function JudgeScoreForm({
         maxLength={500}
         defaultValue={existing?.comment ?? ""}
         placeholder="심사 코멘트 (선택 · 관리자만 봅니다)"
-        className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
+        className="w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
       />
 
       {state.error && !pending && (
@@ -60,7 +60,7 @@ export default function JudgeScoreForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-gold px-4 py-2.5 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
+        className="rounded-lg bg-brand px-4 py-2.5 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-60"
       >
         {pending ? "저장 중…" : existing ? "심사 점수 수정" : "심사 점수 제출"}
       </button>

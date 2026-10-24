@@ -185,7 +185,7 @@ export default function MediaManager({
         onDrop={onDrop}
         className={`flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-8 text-center transition ${
           over
-            ? "border-gold bg-gold/10"
+            ? "border-brand bg-brand/10"
             : "border-white/20 bg-white/[0.03] hover:border-white/40"
         }`}
       >
@@ -230,11 +230,11 @@ export default function MediaManager({
           value={link}
           onChange={(e) => setLink(e.target.value)}
           placeholder="유튜브 링크 붙여넣기 (https://youtu.be/...)"
-          className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/20"
+          className="flex-1 rounded-lg border border-white/15 bg-coal-soft px-3 py-2 text-sm text-white outline-none placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
         />
         <button
           disabled={busy || !link.trim()}
-          className="rounded-lg bg-gold px-4 py-2 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-50"
+          className="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-50"
         >
           추가
         </button>
@@ -245,7 +245,7 @@ export default function MediaManager({
         <div className="mt-3">
           <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
             <div
-              className="h-full bg-gold transition-all"
+              className="h-full bg-brand transition-all"
               style={{ width: `${progress ?? 15}%` }}
             />
           </div>

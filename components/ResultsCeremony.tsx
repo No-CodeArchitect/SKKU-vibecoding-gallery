@@ -35,10 +35,10 @@ const STYLE: Record<number, {
 }> = {
   1: {
     medal: "🥇",
-    text: "text-gold",
-    ring: "ring-gold",
-    glow: "shadow-[0_0_120px_20px_rgba(217,164,65,0.45)]",
-    colors: ["#d9a441", "#f0b450", "#ffe08a", "#fff3c4", "#ffffff", "#ff7a7a", "#6ee7d8"],
+    text: "text-trophy",
+    ring: "ring-trophy",
+    glow: "shadow-[0_0_120px_20px_rgba(226,181,68,0.45)]",
+    colors: ["#e2b544", "#f5d27a", "#8dc63f", "#fff3c4", "#ffffff", "#ff7a7a", "#6ee7d8"],
     suspenseMs: 5600,
   },
   2: {
@@ -172,7 +172,7 @@ export default function ResultsCeremony({
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0d0e12] text-white">
       {/* 무대 조명 */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(217,164,65,0.16),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(141,198,63,0.14),transparent_60%)]" />
       <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-40 h-full w-full" />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-6 sm:px-6">
@@ -260,7 +260,7 @@ function Intro({
   return (
     <div className="ceremony-rise flex flex-col items-center text-center">
       <div className="text-6xl sm:text-7xl">🏆</div>
-      <p className="mt-6 text-sm font-bold tracking-[0.3em] text-gold">SKKU VIBE CODING HACKATHON</p>
+      <p className="mt-6 text-sm font-bold tracking-[0.3em] text-brand">SKKU VIBE CODING HACKATHON</p>
       <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-6xl">최종 결과 발표</h1>
       <div className="mt-8 flex flex-wrap justify-center gap-2 text-sm">
         <WeightChip label="동료평가" value={WEIGHTS.peer} />
@@ -281,7 +281,7 @@ function Intro({
       ) : (
         <button
           onClick={onStart}
-          className="mt-10 rounded-full bg-gold px-10 py-4 text-lg font-black text-night shadow-[0_0_40px_rgba(217,164,65,0.5)] transition hover:scale-105 hover:bg-gold-soft"
+          className="mt-10 rounded-full bg-brand px-10 py-4 text-lg font-black text-night shadow-[0_0_40px_rgba(141,198,63,0.45)] transition hover:scale-105 hover:bg-brand-soft"
         >
           발표 시작 ▶
         </button>
@@ -294,7 +294,7 @@ function Intro({
 function WeightChip({ label, value }: { label: string; value: number }) {
   return (
     <span className="rounded-full bg-white/5 px-4 py-1.5 ring-1 ring-white/15">
-      {label} <b className="text-gold">{value}</b>
+      {label} <b className="text-brand">{value}</b>
     </span>
   );
 }
@@ -331,7 +331,7 @@ function Suspense({ rank, ms }: { rank: number; ms: number }) {
       </p>
       <div className="relative mt-8 h-1.5 w-64 overflow-hidden rounded-full bg-white/10">
         <div
-          className="ceremony-progress h-full rounded-full bg-gold"
+          className="ceremony-progress h-full rounded-full bg-brand"
           style={{ animationDuration: `${ms}ms` }}
         />
       </div>
@@ -464,7 +464,7 @@ function Bar({
       </div>
       <div className="mt-1 h-2 overflow-hidden rounded-full bg-white/10">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-gold-deep to-gold-soft transition-[width] duration-1000 ease-out"
+          className="h-full rounded-full bg-gradient-to-r from-brand-deep to-brand-soft transition-[width] duration-1000 ease-out"
           style={{ width: filled ? `${(points / max) * 100}%` : "0%", transitionDelay: `${delay}ms` }}
         />
       </div>
@@ -510,7 +510,7 @@ function Final({
                 </div>
                 <div
                   className={`ceremony-grow mt-3 w-full rounded-t-xl ${heights[p.rank]} ${
-                    p.rank === 1 ? "bg-gold/80" : p.rank === 2 ? "bg-slate-300/50" : "bg-orange-400/40"
+                    p.rank === 1 ? "bg-trophy/80" : p.rank === 2 ? "bg-slate-300/50" : "bg-orange-400/40"
                   } flex items-start justify-center pt-2 text-2xl font-black text-night`}
                   style={{ animationDelay: `${i * 150}ms` }}
                 >
@@ -536,7 +536,7 @@ function Final({
                   {p.breakdown.aiPoints.toFixed(1)}
                 </div>
               </div>
-              <div className="text-lg font-black tabular-nums text-gold">{p.total.toFixed(1)}</div>
+              <div className="text-lg font-black tabular-nums text-brand">{p.total.toFixed(1)}</div>
             </li>
           ))}
         </ul>
@@ -554,7 +554,7 @@ function Final({
           <button
             onClick={onPublish}
             disabled={publishing}
-            className="rounded-full bg-gold px-6 py-3 text-sm font-black text-night transition hover:bg-gold-soft disabled:opacity-60"
+            className="rounded-full bg-brand px-6 py-3 text-sm font-black text-night transition hover:bg-brand-soft disabled:opacity-60"
           >
             {publishing ? "공개 중…" : "🏆 갤러리에 순위 공개"}
           </button>

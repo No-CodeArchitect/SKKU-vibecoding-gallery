@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 
 function Stars({ value }: { value: number }) {
   return (
-    <span className="text-gold">
+    <span className="text-brand">
       {"★".repeat(value)}
       <span className="text-white/20">{"★".repeat(5 - value)}</span>
     </span>
@@ -40,7 +40,7 @@ function Hero({
         href={liveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-gold/50"
+        className="block overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-brand/50"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={imageUrl} alt={`${title} 썸네일`} className="aspect-[16/10] w-full object-cover object-top" />
@@ -100,11 +100,11 @@ export default async function ProjectDetailPage({
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <Link
             href={slug ? `/g/${slug}` : "/"}
-            className="text-sm font-semibold text-white/50 hover:text-gold"
+            className="text-sm font-semibold text-white/50 hover:text-brand"
           >
             ← 갤러리로
           </Link>
-          <span className="rounded-md bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">
+          <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-bold text-brand">
             {cohort?.name ?? ""}
           </span>
         </div>
@@ -122,7 +122,7 @@ export default async function ProjectDetailPage({
           <div>
             <div className="flex flex-wrap items-center gap-2">
               {rankRevealed && rank !== null && (
-                <span className="inline-flex items-center rounded-full bg-gold/20 px-2.5 py-0.5 text-sm font-bold text-gold">
+                <span className="inline-flex items-center rounded-full bg-brand/20 px-2.5 py-0.5 text-sm font-bold text-brand">
                   {rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : ""}{" "}
                   {rank}위
                 </span>
@@ -137,8 +137,8 @@ export default async function ProjectDetailPage({
               )}
             </div>
             {rankRevealed && b && (
-              <div className="mt-2 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg bg-gold/15 px-3 py-1.5 text-sm">
-                <span className="font-bold text-gold">
+              <div className="mt-2 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg bg-brand/15 px-3 py-1.5 text-sm">
+                <span className="font-bold text-brand">
                   종합 {ranked?.totalScore != null ? ranked.totalScore.toFixed(1) : "-"} / 100
                 </span>
                 <span className="text-white/50">
@@ -161,7 +161,7 @@ export default async function ProjectDetailPage({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-gold hover:text-gold-soft"
+                className="font-semibold text-brand hover:text-brand-soft"
               >
                 사이트 열기 ↗
               </a>
@@ -180,7 +180,7 @@ export default async function ProjectDetailPage({
               {project.features.map((f) => (
                 <li
                   key={f}
-                  className="rounded-full bg-gold/15 px-3 py-1 text-sm font-medium text-gold"
+                  className="rounded-full bg-brand/15 px-3 py-1 text-sm font-medium text-brand"
                 >
                   {f}
                 </li>
@@ -201,7 +201,7 @@ export default async function ProjectDetailPage({
                 {(
                   [
                     ["해결하려는 문제", project.details.problem],
-                    ["활용 시나리오", project.details.militaryUseCase],
+                    ["현장 활용 시나리오", project.details.militaryUseCase],
                     ["사용한 도구·기술", project.details.techStack],
                     ["제작 후기", project.details.notes],
                   ] as const
@@ -221,7 +221,7 @@ export default async function ProjectDetailPage({
                         href={project.repoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="break-all text-gold hover:text-gold-soft"
+                        className="break-all text-brand hover:text-brand-soft"
                       >
                         {project.repoUrl}
                       </a>
@@ -273,7 +273,7 @@ export default async function ProjectDetailPage({
               ) : (
                 <Link
                   href={slug ? `/g/${slug}/join` : "/"}
-                  className="block rounded-xl border border-white/15 bg-coal-soft px-4 py-3 text-center text-sm font-semibold text-gold transition hover:bg-white/5"
+                  className="block rounded-xl border border-white/15 bg-coal-soft px-4 py-3 text-center text-sm font-semibold text-brand transition hover:bg-white/5"
                 >
                   이 섹션 참가자로 로그인하면 댓글을 남길 수 있어요
                 </Link>

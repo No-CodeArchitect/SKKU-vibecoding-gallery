@@ -37,7 +37,7 @@ export default function ScoreWidget({
         </p>
         <Link
           href={loginHref}
-          className="mt-4 block rounded-lg bg-gold px-4 py-2.5 text-center text-sm font-bold text-night transition hover:bg-gold-soft"
+          className="mt-4 block rounded-lg bg-brand px-4 py-2.5 text-center text-sm font-bold text-night transition hover:bg-brand-soft"
         >
           로그인하고 채점하기
         </Link>
@@ -100,7 +100,7 @@ export default function ScoreWidget({
           <button
             type="submit"
             disabled={pending}
-            className="rounded-lg bg-gold px-4 py-2.5 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
+            className="rounded-lg bg-brand px-4 py-2.5 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-60"
           >
             {pending
               ? "저장 중…"

@@ -6,7 +6,7 @@ export default function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-block h-2 w-2 rounded-full bg-gold" />
+            <span className="inline-block h-2 w-2 rounded-full bg-brand" />
             <span className="text-sm font-black tracking-widest text-white">
               SKKU 바이브코딩
             </span>
@@ -16,25 +16,25 @@ export default function SiteFooter() {
           </p>
         </div>
         <nav className="flex flex-wrap gap-4 text-xs text-white/50">
-          <Link href="/about" className="hover:text-gold">
+          <Link href="/about" className="hover:text-brand">
             해커톤 소개
           </Link>
-          <Link href="/archive" className="hover:text-gold">
+          <Link href="/archive" className="hover:text-brand">
             아카이브
           </Link>
-          <Link href="/sections" className="hover:text-gold">
+          <Link href="/sections" className="hover:text-brand">
             포트폴리오
           </Link>
-          <Link href="/media" className="hover:text-gold">
+          <Link href="/media" className="hover:text-brand">
             미디어
           </Link>
-          <Link href="/apply" className="hover:text-gold">
+          <Link href="/apply" className="hover:text-brand">
             문의
           </Link>
-          <Link href="/privacy" className="hover:text-gold">
+          <Link href="/privacy" className="hover:text-brand">
             개인정보 처리방침
           </Link>
-          <Link href="/admin" className="hover:text-gold">
+          <Link href="/admin" className="hover:text-brand">
             관리자
           </Link>
         </nav>

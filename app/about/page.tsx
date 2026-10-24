@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic"; // 관리자가 바꾼 배점을 바로 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+      <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {children}
       </span>
     </div>
@@ -56,11 +56,11 @@ export default async function AboutPage() {
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <Eyebrow>SKKU Vibe Coding Hackathon</Eyebrow>
           <h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
-            성균관대학교 바이브코딩 해커톤
+            성균관대학교 국방 AI 바이브코딩 해커톤
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-white/60">
             AI에게 말로 설명하며 함께 코드를 짜는 &lsquo;바이브코딩&rsquo;으로,
-            참가자 각자가 풀고 싶은 문제를 정하고 실제로 작동하는 웹 서비스를
+            군인·군무원 참가자 각자가 부대·기관 업무 현장의 문제를 정하고 실제로 작동하는 웹 서비스를
             완성하는 해커톤입니다. 완성한 작품은 이 갤러리에 등록되고,
             동료·심사위원·AI의 평가를 합산해 순위를 정합니다.
           </p>
@@ -78,7 +78,7 @@ export default async function AboutPage() {
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {CRITERIA.map((c) => (
             <div key={c.name} className="rounded-xl bg-coal p-6 ring-1 ring-white/10">
-              <div className="text-4xl font-black text-gold">
+              <div className="text-4xl font-black text-brand">
                 {c.weight}
                 <span className="ml-1 text-base text-white/40">점</span>
               </div>
@@ -101,7 +101,7 @@ export default async function AboutPage() {
             {FLOW.map((step, i) => (
               <li key={step} className="flex items-center gap-2">
                 <span className="rounded-lg bg-coal px-3 py-2 text-sm font-medium text-white ring-1 ring-white/10">
-                  <span className="mr-1.5 text-xs font-bold text-gold">
+                  <span className="mr-1.5 text-xs font-bold text-brand">
                     {i + 1}
                   </span>
                   {step}
@@ -126,7 +126,7 @@ export default async function AboutPage() {
             ["공개 범위", "갤러리에는 닉네임과 작품 정보만 공개되고, 실명과 채점 내역은 운영진만 봅니다. 순위는 결과 발표 전까지 비공개입니다."],
           ].map(([k, v]) => (
             <li key={k} className="flex flex-col gap-1 border-b border-white/10 pb-4 sm:flex-row sm:gap-6">
-              <span className="w-24 shrink-0 text-lg font-black text-gold">{k}</span>
+              <span className="w-24 shrink-0 text-lg font-black text-brand">{k}</span>
               <span className="flex-1 leading-relaxed text-white/70">{v}</span>
             </li>
           ))}

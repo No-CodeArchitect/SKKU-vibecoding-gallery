@@ -6,7 +6,7 @@ import { joinSectionAction, type JoinState } from "@/lib/auth-actions";
 const initialState: JoinState = { ok: false, error: null };
 
 const inputCls =
-  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-gold focus:ring-2 focus:ring-gold/20";
+  "w-full rounded-lg border border-white/15 bg-coal-soft px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/35 focus:border-brand focus:ring-2 focus:ring-brand/20";
 
 export default function JoinForm({
   cohortId,
@@ -23,7 +23,7 @@ export default function JoinForm({
       <input type="hidden" name="cohortId" value={cohortId} />
       <div className="flex flex-col gap-1.5">
         <label htmlFor="realName" className="text-sm font-semibold text-white">
-          실명<span className="ml-1 text-gold">*</span>
+          실명<span className="ml-1 text-brand">*</span>
         </label>
         <input
           id="realName"
@@ -38,7 +38,7 @@ export default function JoinForm({
       </div>
       <div className="flex flex-col gap-1.5">
         <label htmlFor="nickname" className="text-sm font-semibold text-white">
-          닉네임<span className="ml-1 text-gold">*</span>
+          닉네임<span className="ml-1 text-brand">*</span>
         </label>
         <input
           id="nickname"
@@ -61,7 +61,7 @@ export default function JoinForm({
       <button
         type="submit"
         disabled={pending}
-        className="mt-1 rounded-lg bg-gold px-4 py-2.5 text-sm font-bold text-night transition hover:bg-gold-soft disabled:opacity-60"
+        className="mt-1 rounded-lg bg-brand px-4 py-2.5 text-sm font-bold text-night transition hover:bg-brand-soft disabled:opacity-60"
       >
         {pending ? "신청 중…" : "가입 신청"}
       </button>

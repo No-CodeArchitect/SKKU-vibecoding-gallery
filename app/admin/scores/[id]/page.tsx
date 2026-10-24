@@ -57,7 +57,7 @@ export default async function ProjectScoresPage({ params }: { params: Promise<{ 
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
           <div>
-            <Link href="/admin" className="text-xs font-semibold text-white/40 hover:text-gold">
+            <Link href="/admin" className="text-xs font-semibold text-white/40 hover:text-brand">
               ← 관리자 콘솔
             </Link>
             <h1 className="mt-1 text-xl font-black">{project.title}</h1>
@@ -67,7 +67,7 @@ export default async function ProjectScoresPage({ params }: { params: Promise<{ 
           </div>
           <a
             href={`/api/admin/scores-csv?projectId=${encodeURIComponent(id)}`}
-            className="rounded-lg border border-gold/60 px-3 py-1.5 text-xs font-bold text-gold hover:bg-gold hover:text-night"
+            className="rounded-lg border border-brand/60 px-3 py-1.5 text-xs font-bold text-brand hover:bg-brand hover:text-night"
           >
             평가 기록 CSV
           </a>
@@ -135,7 +135,7 @@ export default async function ProjectScoresPage({ params }: { params: Promise<{ 
                       <td className="py-2">
                         <span
                           className={`rounded px-1.5 py-0.5 text-xs font-semibold ${
-                            h.raterType === "judge" ? "bg-gold/20 text-gold" : "bg-white/10 text-white/70"
+                            h.raterType === "judge" ? "bg-brand/20 text-brand" : "bg-white/10 text-white/70"
                           }`}
                         >
                           {h.raterType === "judge" ? "심사위원" : "동료"}
@@ -160,9 +160,9 @@ export default async function ProjectScoresPage({ params }: { params: Promise<{ 
 
 function Stat({ label, value, sub, accent }: { label: string; value: string; sub?: string; accent?: boolean }) {
   return (
-    <div className={`rounded-xl px-3 py-2 ring-1 ${accent ? "bg-gold/10 ring-gold/30" : "bg-coal ring-white/10"}`}>
+    <div className={`rounded-xl px-3 py-2 ring-1 ${accent ? "bg-brand/10 ring-brand/30" : "bg-coal ring-white/10"}`}>
       <div className="text-xs text-white/50">{label}</div>
-      <div className={`text-lg font-black ${accent ? "text-gold" : "text-white"}`}>{value}</div>
+      <div className={`text-lg font-black ${accent ? "text-brand" : "text-white"}`}>{value}</div>
       {sub && <div className="text-[11px] text-white/40">{sub}</div>}
     </div>
   );
@@ -189,7 +189,7 @@ function ScoreTable({
                 <span className="text-xs text-white/50">
                   완성도 <b className="text-white">{r.c}</b> · 창의성 <b className="text-white">{r.k}</b>
                 </span>
-                <span className="w-10 text-right font-bold text-gold">{((r.c + r.k) / 2).toFixed(1)}</span>
+                <span className="w-10 text-right font-bold text-brand">{((r.c + r.k) / 2).toFixed(1)}</span>
               </div>
               {r.note && <p className="mt-1 text-xs text-white/50">{r.note}</p>}
             </li>

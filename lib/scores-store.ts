@@ -109,7 +109,7 @@ export async function scoredProjectIds(
   return ids;
 }
 
-// 특정 섹션(프로젝트 집합)에서 채점에 참여한 서로 다른 학생 수.
+// 특정 섹션(프로젝트 집합)에서 채점에 참여한 서로 다른 참가자 수.
 export async function distinctRaterCountFor(
   projectIds: Set<string>
 ): Promise<number> {
