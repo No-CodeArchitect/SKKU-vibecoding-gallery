@@ -34,6 +34,7 @@ import { listJudges } from "@/lib/judges-store";
 import { allJudgeScoreRows } from "@/lib/judge-scores-store";
 import { getWeights } from "@/lib/weights-store";
 import WeightsForm from "@/components/WeightsForm";
+import CohortInfoForm from "@/components/CohortInfoForm";
 import { listMedia } from "@/lib/media-items";
 import MediaManager from "@/components/MediaManager";
 import {
@@ -416,6 +417,12 @@ async function SectionPanel({ cohort: c, view, origin }: { cohort: Cohort; view:
               가입 수락 대기 {pendingMembers.length}명 → 참가자 탭에서 처리
             </Link>
           )}
+
+          {/* 섹션 이름·링크 주소 */}
+          <div className="mt-5 border-t border-white/10 pt-4">
+            <h3 className="mb-3 text-sm font-bold text-white">섹션 이름 · 링크 주소</h3>
+            <CohortInfoForm cohortId={c.id} name={c.name} slug={c.slug} origin={origin} />
+          </div>
         </Panel>
       )}
 

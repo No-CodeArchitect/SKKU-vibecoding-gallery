@@ -15,6 +15,7 @@ import {
   setCohortScoringOpen,
   setCohortRankRevealed,
   setCohortMinRaters,
+  updateCohortInfo,
   getCohortById,
 } from "./cohorts-store";
 import {
@@ -135,6 +136,26 @@ export async function moderateComment(formData: FormData): Promise<void> {
   const hidden = String(formData.get("hidden")) === "true";
   await setCommentHidden(id, hidden);
   refresh();
+}
+
+// --- 섹션 이름·링크 주소 ---
+export interface CohortInfoState {
+  ok: boolean;
+  error: string | null;
+}
+
+export async function updateCohortInfoAction(
+  _prev: CohortInfoState,
+  formData: FormData
+): Promise<CohortInfoState> {
+  await requireAdmin();
+  const res = await updateCohortInfo(
+    String(formData.get("cohortId") ?? ""),
+    String(formData.get("name") ?? ""),
+    String(formData.get("slug") ?? "")
+  );
+  if (res.ok) refresh();
+  return res;
 }
 
 // --- 순위 최소 채점 인원 ---

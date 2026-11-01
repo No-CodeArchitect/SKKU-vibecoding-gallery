@@ -73,7 +73,18 @@ export async function listCohorts(): Promise<Cohort[]> {
   return [...mem].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 }
 
-export async function getCohortBySlug(slug: string): Promise<Cohort | null> {
+// URL 경로의 [slug] 는 퍼센트 인코딩된 채로 들어온다 (예: "2기" → "2%EA%B8%B0").
+// 한글 링크 주소도 찾을 수 있게 디코딩해서 비교한다.
+function decodeSlug(raw: string): string {
+  try {
+    return decodeURIComponent(raw).normalize("NFC");
+  } catch {
+    return raw;
+  }
+}
+
+export async function getCohortBySlug(rawSlug: string): Promise<Cohort | null> {
+  const slug = decodeSlug(rawSlug);
   const sb = getSupabase();
   if (sb) {
     try {
@@ -178,6 +189,33 @@ export async function setCohortRankRevealed(
   }
   const c = mem.find((x) => x.id === id);
   if (c) c.rankRevealed = v;
+}
+
+// 섹션 이름·링크 주소 변경. 다른 섹션이 이미 쓰는 링크면 거절한다.
+// 링크가 바뀌면 예전 링크(/g/옛주소)는 더 이상 열리지 않는다.
+export async function updateCohortInfo(
+  id: string,
+  nameInput: string,
+  slugInput: string
+): Promise<{ ok: boolean; error: string | null }> {
+  const name = nameInput.trim();
+  const slug = slugify(slugInput || name);
+  if (!name) return { ok: false, error: "섹션 이름을 입력해 주세요." };
+  const other = await getCohortBySlug(slug);
+  if (other && other.id !== id) return { ok: false, error: `「${slug}」 링크는 다른 섹션이 쓰고 있습니다.` };
+
+  const sb = getSupabase();
+  if (sb) {
+    const { error } = await sb.from("cohorts").update({ name, slug }).eq("id", id);
+    if (!error) return { ok: true, error: null };
+    if (process.env.VERCEL) return { ok: false, error: `저장 실패: ${error.message}` };
+  }
+  const c = mem.find((x) => x.id === id);
+  if (c) {
+    c.name = name;
+    c.slug = slug;
+  }
+  return { ok: true, error: null };
 }
 
 export async function setCohortMinRaters(id: string, n: number): Promise<void> {
