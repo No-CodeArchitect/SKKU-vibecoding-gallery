@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/site/SiteHeader";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SubmitProjectForm from "@/components/SubmitProjectForm";
@@ -58,6 +59,7 @@ export default async function SubmitPage({
 
   return (
     <main className="min-h-screen bg-night text-white">
+      <SiteHeader />
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
         <Link href={`/g/${slug}`} className="text-xs font-semibold text-white/40 hover:text-brand">
           ← {cohort.name} 갤러리

@@ -11,6 +11,7 @@ import { listScoreHistory } from "@/lib/score-history-store";
 import { rankProjects } from "@/lib/ranking";
 import { getWeights } from "@/lib/weights-store";
 import { AI_SCORE_MAX, SCORE_MAX } from "@/lib/scoring";
+import { adminHref } from "@/lib/admin-nav";
 
 export const dynamic = "force-dynamic";
 
@@ -57,8 +58,11 @@ export default async function ProjectScoresPage({ params }: { params: Promise<{ 
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
           <div>
-            <Link href="/admin" className="text-xs font-semibold text-white/40 hover:text-brand">
-              ← 관리자 콘솔
+            <Link
+              href={adminHref("section", project.cohortId, "ranking")}
+              className="text-xs font-semibold text-white/40 hover:text-brand"
+            >
+              ← 순위 · 점수
             </Link>
             <h1 className="mt-1 text-xl font-black">{project.title}</h1>
             <p className="text-sm text-white/50">

@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/site/SiteHeader";
 import Link from "next/link";
 import GoogleButton from "@/components/GoogleButton";
 import JudgeScoreForm from "@/components/JudgeScoreForm";
@@ -6,6 +7,8 @@ import { getJudge } from "@/lib/judge-session";
 import { judgeScoresBy } from "@/lib/judge-scores-store";
 import { listCohorts } from "@/lib/cohorts-store";
 import { getProjects } from "@/lib/projects-data";
+import { rankProjects } from "@/lib/ranking";
+import { sortForGallery } from "@/lib/gallery-order";
 import { logout } from "@/lib/auth-actions";
 import { ssoEnabled } from "@/lib/google-oauth";
 import { getWeights } from "@/lib/weights-store";
@@ -66,11 +69,19 @@ export default async function JudgePage() {
   const WEIGHTS = await getWeights();
   const cohorts = await listCohorts();
   const sections = (
-    await Promise.all(cohorts.map(async (c) => ({ c, projects: await getProjects(c.id) })))
+    await Promise.all(
+      cohorts.map(async (c) => {
+        // 섹션 갤러리와 같은 순서로 보여 준다 (lib/gallery-order.ts)
+        const all = await getProjects(c.id);
+        const base = c.rankRevealed ? await rankProjects(all, c.minRaters) : all;
+        return { c, projects: sortForGallery(base, c.rankRevealed) };
+      })
+    )
   ).filter((s) => s.projects.length > 0);
 
   return (
     <main className="min-h-screen bg-night text-white">
+      <SiteHeader />
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
           <div>

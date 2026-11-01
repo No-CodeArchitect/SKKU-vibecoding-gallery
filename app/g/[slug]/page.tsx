@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/site/SiteHeader";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectCard from "@/components/ProjectCard";
@@ -10,6 +11,7 @@ import { logout } from "@/lib/auth-actions";
 import { scoredProjectIds } from "@/lib/scores-store";
 import { getCohortBySlug } from "@/lib/cohorts-store";
 import { rankProjects } from "@/lib/ranking";
+import { sortForGallery } from "@/lib/gallery-order";
 import { isAdmin } from "@/lib/admin-session";
 import { getWeights } from "@/lib/weights-store";
 
@@ -52,16 +54,7 @@ export default async function SectionGalleryPage({
     };
   });
 
-  const projects = viewProjects.sort((a, b) => {
-    if (cohort.rankRevealed) {
-      const ar = a.rank ?? Infinity;
-      const br = b.rank ?? Infinity;
-      if (ar !== br) return ar - br;
-    }
-    return (
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-  });
+  const projects = sortForGallery(viewProjects, cohort.rankRevealed);
 
   const newCount = projects.filter((p) => p.isNew).length;
   const scoredCount = projects.filter((p) => p.hasScored).length;
@@ -71,6 +64,7 @@ export default async function SectionGalleryPage({
 
   return (
     <main className="min-h-screen bg-night text-white">
+      <SiteHeader />
       <header className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
           <Link

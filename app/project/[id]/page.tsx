@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/site/SiteHeader";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScoreWidget from "@/components/ScoreWidget";
@@ -96,6 +97,7 @@ export default async function ProjectDetailPage({
 
   return (
     <main className="min-h-screen bg-night text-white">
+      <SiteHeader />
       <div className="border-b border-white/10 bg-night-soft">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <Link
