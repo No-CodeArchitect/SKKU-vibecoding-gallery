@@ -19,6 +19,9 @@ export default function SiteFooter() {
           <Link href="/about" className="hover:text-brand">
             해커톤 소개
           </Link>
+          <Link href="/materials" className="hover:text-brand">
+            교안
+          </Link>
           <Link href="/archive" className="hover:text-brand">
             아카이브
           </Link>

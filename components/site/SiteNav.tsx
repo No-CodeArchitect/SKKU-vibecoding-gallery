@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/", label: "홈" },
   { href: "/about", label: "해커톤 소개" },
+  { href: "/materials", label: "교안" },
   { href: "/archive", label: "아카이브" },
   { href: "/sections", label: "포트폴리오" },
   { href: "/media", label: "미디어" },

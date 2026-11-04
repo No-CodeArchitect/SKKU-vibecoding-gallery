@@ -110,6 +110,12 @@ export default async function HomePage() {
             >
               해커톤 소개
             </Link>
+            <Link
+              href="/materials"
+              className="rounded-full border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-brand hover:text-brand"
+            >
+              📘 교안 보기
+            </Link>
           </div>
         </div>
       </section>
